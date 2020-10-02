@@ -23,27 +23,27 @@ public class DetailTransaksi {
         this.id = id;
     }
 
-    public int getjml_Barang() {
+    public int getJmlBarang() {
         return jmlBarang;
     }
 
-    public void setjml_Barang(int jmlBarang) {
+    public void setJmlBarang(int jmlBarang) {
         this.jmlBarang = jmlBarang;
     }
 
-    public String getidTransaksi() {
+    public String getIdTransaksi() {
         return idTransaksi;
     }
 
-    public void setidTransaksi(String idTransaksi) {
+    public void setIdTransaksi(String idTransaksi) {
         this.idTransaksi = idTransaksi;
     }
 
-    public String getidBarang() {
+    public String getIdBarang() {
         return idBarang;
     }
 
-    public void setidBarang(String idBarang) {
+    public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
     }
     

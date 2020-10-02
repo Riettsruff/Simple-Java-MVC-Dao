@@ -34,9 +34,9 @@ public class DetailTransaksiController {
                DetailTransaksi detailtransaksi = new DetailTransaksi();
 
                detailtransaksi.setId(rs.getInt("id"));
-               detailtransaksi.setjml_Barang(rs.getInt("jml_barang"));
-               detailtransaksi.setidBarang(rs.getString("id_barang"));
-               detailtransaksi.setidTransaksi(rs.getString("id_transaksi"));
+               detailtransaksi.setJmlBarang(rs.getInt("jml_barang"));
+               detailtransaksi.setIdBarang(rs.getString("id_barang"));
+               detailtransaksi.setIdTransaksi(rs.getString("id_transaksi"));
 
                listDetailTransaksi.add(detailtransaksi);
            }
