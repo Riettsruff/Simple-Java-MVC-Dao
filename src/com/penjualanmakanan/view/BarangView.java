@@ -12,7 +12,6 @@ import com.penjualanmakanan.model.Barang;
 import com.penjualanmakanan.util.FormatRupiah;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
 
 class ProcessBarang extends Thread {
 
@@ -146,6 +145,11 @@ public class BarangView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelBarangMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelBarang);
 
         judul.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
@@ -167,8 +171,18 @@ public class BarangView extends javax.swing.JFrame {
         });
 
         update.setText("Perbarui");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
 
         delete.setText("Hapus");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
 
         refresh.setText("Segarkan");
 
@@ -300,6 +314,28 @@ public class BarangView extends javax.swing.JFrame {
     private void inputIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputIdActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        // TODO add your handling code here:
+        int baris = tabelBarang.getSelectedRow();
+        Object id = tabelBarang.getValueAt(baris, 1);
+        Object nama = tabelBarang.getValueAt(baris, 2);
+        Object stok = tabelBarang.getValueAt(baris, 3);
+        Object harga = tabelBarang.getValueAt(baris, 4);
+        inputId.setText(id.toString());
+        inputNama.setText(nama.toString());
+        inputStok.setText(stok.toString());
+        inputHarga.setText(harga.toString());
+    }//GEN-LAST:event_tabelBarangMouseClicked
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateActionPerformed
 
     /**
      * @param args the command line arguments
