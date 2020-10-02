@@ -58,7 +58,7 @@ public class BarangController {
            ps.setString(2, barang.getNama());
            ps.setInt(3, barang.getStok());
            ps.setInt(4, barang.getHarga());
-            
+           
            if (ps.executeUpdate() > 0){
                return true;
            }

@@ -48,7 +48,7 @@ public class BarangView extends javax.swing.JFrame {
 
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
-
+        
         Object[][] obj = new Object[listBarang.size()][5];
 
         for (int i = 0; i < listBarang.size(); i++) {
@@ -75,6 +75,18 @@ public class BarangView extends javax.swing.JFrame {
             }
         }
         );
+    }
+    
+    public void insertBarang(){
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        barang.setNama(inputNama.getText());
+        barang.setStok(Integer.parseInt(inputStok.getText()));
+        barang.setHarga(Integer.parseInt(inputHarga.getText()));
+        
+        barangController.insertBarang(barang);
+        
+               
     }
 
     /**
@@ -276,6 +288,9 @@ public class BarangView extends javax.swing.JFrame {
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
+        
+        
+        insertBarang();
     }//GEN-LAST:event_insertActionPerformed
 
     private void inputNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNamaActionPerformed
