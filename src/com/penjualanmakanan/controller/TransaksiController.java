@@ -46,4 +46,42 @@ public class TransaksiController {
         
         return listTransaksi;
     }
+    
+    public String getMaxIdTransaksi() {
+        String maxIdTransaksi = "001";
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT RIGHT((SElECT MAX(id) AS max_id FROM transaksi), 3) AS \"max_id\"");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                if(rs.getString("max_id")!=null) {
+                    maxIdTransaksi = rs.getString("max_id");
+                }
+            }  
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return maxIdTransaksi;
+    }
+    
+    public boolean insertTransaksi(Transaksi transaksi) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO transaksi (id, tgl_transaksi) VALUES (?, ?)");
+            ps.setString(1, transaksi.getId());
+            ps.setString(2, transaksi.getTglTransaksi());
+            
+            if (ps.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
 }

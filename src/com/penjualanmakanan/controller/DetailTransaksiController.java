@@ -92,4 +92,24 @@ public class DetailTransaksiController {
        
        return totalBarang;
    }
+   
+   public boolean insertDetailTransaksi(DetailTransaksi detailTransaksi) {
+       try {
+           PreparedStatement ps = conn.prepareStatement("INSERT INTO detail_transaksi (id, jml_barang, id_barang, id_transaksi) VALUES (?, ?, ?, ?)");
+           ps.setInt(1, detailTransaksi.getId());
+           ps.setInt(2, detailTransaksi.getJmlBarang());
+           ps.setString(3, detailTransaksi.getIdBarang());
+           ps.setString(4, detailTransaksi.getIdTransaksi());
+            
+           if (ps.executeUpdate() > 0){
+               return true;
+           }
+       } catch (SQLException se) {
+           se.printStackTrace();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       
+       return false;
+   }
 }
