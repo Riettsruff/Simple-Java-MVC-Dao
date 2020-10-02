@@ -51,4 +51,24 @@ public class BarangController {
         
     }
     
+    public boolean insertBarang(Barang barang) {
+       try {
+           PreparedStatement ps = conn.prepareStatement("INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)");
+           ps.setString(1, barang.getId());
+           ps.setString(2, barang.getNama());
+           ps.setInt(3, barang.getStok());
+           ps.setInt(4, barang.getHarga());
+            
+           if (ps.executeUpdate() > 0){
+               return true;
+           }
+       } catch (SQLException se) {
+           se.printStackTrace();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       
+       return false;
+   }
+    
 }
