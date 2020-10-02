@@ -4,11 +4,51 @@
  * and open the template in the editor.
  */
 package com.penjualanmakanan.controller;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import com.penjualanmakanan.util.Koneksi;
+import com.penjualanmakanan.model.Barang;
 /**
  *
  * @author Riett
  */
 public class BarangController {
+    Connection conn;
+    
+    public BarangController() {
+        conn = (Connection) new Koneksi().getKoneksi();
+    }
+    
+    public List<Barang> getAllBarang() {
+        List<Barang> listBarang = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT id, nama, stok, harga FROM `barang`");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                Barang barang = new Barang();
+                
+                barang.setId(rs.getString("id"));
+                barang.setNama(rs.getString("nama"));
+                barang.setStok(rs.getInt("stok"));
+                barang.setHarga(rs.getInt("harga"));
+                
+                listBarang.add(barang);
+            }
+            
+            
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return listBarang;
+        
+    }
     
 }

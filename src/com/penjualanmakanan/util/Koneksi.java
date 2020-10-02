@@ -11,14 +11,14 @@ import java.sql.SQLException;
 
 public class Koneksi {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost/penjualan_makanan";
+    private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+    private final String DB_URL = "jdbc:mysql://localhost/penjualan_makanan";
 
     //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "";
+    private final String USER = "root";
+    private final String PASS = "";
     
-    static Koneksi conn;
+    private Connection conn = null;
     
     public Koneksi() {
         try {
@@ -26,7 +26,7 @@ public class Koneksi {
             Class.forName(JDBC_DRIVER);
             
             // Open a connection
-            conn = (Koneksi) DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch(SQLException se){
             // Handle errors for JDBC
             se.printStackTrace();
@@ -36,7 +36,7 @@ public class Koneksi {
         }
     }
 
-    public static Koneksi getKoneksi() {
+    public Connection getKoneksi() {
         return conn;
     }
 }

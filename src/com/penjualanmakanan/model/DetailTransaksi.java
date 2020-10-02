@@ -10,40 +10,40 @@ package com.penjualanmakanan.model;
  * @author Riett
  */
 public class DetailTransaksi {
-    private String id;
+    private int id;
     private int jmlBarang;
-    private int idTransaksi;
+    private String idTransaksi;
     private String idBarang;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getjml_Barang() {
+    public int getJmlBarang() {
         return jmlBarang;
     }
 
-    public void setjml_Barang(int jmlBarang) {
+    public void setJmlBarang(int jmlBarang) {
         this.jmlBarang = jmlBarang;
     }
 
-    public int getidTransaksi() {
+    public String getIdTransaksi() {
         return idTransaksi;
     }
 
-    public void setidTransaksi(int idTransaksi) {
+    public void setIdTransaksi(String idTransaksi) {
         this.idTransaksi = idTransaksi;
     }
 
-    public String getidBarang() {
+    public String getIdBarang() {
         return idBarang;
     }
 
-    public void setidBarang(String idBarang) {
+    public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
     }
     

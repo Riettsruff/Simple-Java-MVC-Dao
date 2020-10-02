@@ -9,25 +9,25 @@ package com.penjualanmakanan.model;
  *
  * @author Riett
  */
-import java.util.Date;
+
 public class Transaksi {
-    private int Id;
-    private Date Tgl_Transaksi;
+    private String id;
+    private String tglTransaksi;
 
-    public int getId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Date getTgl_Transaksi() {
-        return Tgl_Transaksi;
+    public String getTglTransaksi() {
+        return tglTransaksi;
     }
 
-    public void setTgl_Transaksi(Date Tgl_Transaksi) {
-        this.Tgl_Transaksi = Tgl_Transaksi;
+    public void setTglTransaksi(String tglTransaksi) {
+        this.tglTransaksi = tglTransaksi;
     }
     
 }
