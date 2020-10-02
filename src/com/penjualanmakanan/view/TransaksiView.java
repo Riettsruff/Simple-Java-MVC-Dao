@@ -7,38 +7,88 @@ package com.penjualanmakanan.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.penjualanmakanan.controller.BarangController;
-import com.penjualanmakanan.model.Barang;
-
-/**
- *
- * @author Riett
- */
+import com.penjualanmakanan.controller.TransaksiController;
+import com.penjualanmakanan.model.Transaksi;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
+class Process extends Thread {
+    TransaksiView transaksiView;
+
+    public Process(TransaksiView v) {
+        this.transaksiView = v;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            transaksiView.bindingTabelTransaksi();
+            
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}
 
 public class TransaksiView extends javax.swing.JFrame {
     
-    List<Barang> listBarang = new ArrayList<>();
-
+    List<Transaksi> listTransaksi = new ArrayList<>();
+    DefaultTableModel tableModel;
+    
     /**
      * Creates new form Transaksi
      */
+    public TransaksiView() {
+        initComponents();
+        bindingTabelTransaksi();
+    }
+    
     public void menampilkanTanggal(){
         Date tanggal = new Date();
         SimpleDateFormat tampil = new SimpleDateFormat("dd-MM-yyyy");
         Tanggal_Now.setText(tampil.format(tanggal));
     }
-    public TransaksiView() {
-        initComponents();
+    
+    public void bindingTabelTransaksi() {
+        tableModel = new DefaultTableModel();
+        Tabel_Transaksi.setModel(tableModel);
+        tableModel.addColumn("No.");
+        tableModel.addColumn("ID Transaksi");
+        tableModel.addColumn("Tanggal Transaksi");
         
-        BarangController barangController = new BarangController();
+        listTransaksi = new TransaksiController().getAllTransaksi();
         
-        listBarang = barangController.getAllBarang();
+        Object [][] obj = new Object[listTransaksi.size()][3];
         
-        for(int i = 0; i < listBarang.size(); i++) {
-            System.out.println(listBarang.get(i).getNama());
+        for (int i = 0; i < listTransaksi.size();i++){
+            obj[i][0] = (i+1) + ".";
+            obj[i][1] = listTransaksi.get(i).getId();
+            obj[i][2] = listTransaksi.get(i).getTglTransaksi();
         }
+        
+        Tabel_Transaksi.setModel(
+            new javax.swing.table.DefaultTableModel(
+                obj,
+                new String [] {
+                    "No.","ID Transaksi", "Tanggal Transaksi"
+                }
+            )
+            {
+                boolean[] canEdit = new boolean[]{
+                    false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            }
+        );
     }
 
     /**
@@ -243,7 +293,6 @@ public class TransaksiView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_TambahActionPerformed
 
     private void Tanggal_NowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tanggal_NowActionPerformed
-        initComponents();
         menampilkanTanggal();
     }//GEN-LAST:event_Tanggal_NowActionPerformed
 
