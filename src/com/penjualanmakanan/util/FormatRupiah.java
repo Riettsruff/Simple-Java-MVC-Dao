@@ -13,7 +13,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class FormatRupiah {
-    public String Kurensi(long uang) {
+    public String kurensi(long uang) {
         NumberFormat kurensiIndonesia = NumberFormat.getCurrencyInstance(new Locale("in","ID"));
         return kurensiIndonesia.format(uang);
     }
