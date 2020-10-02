@@ -5,17 +5,30 @@
  */
 package com.penjualanmakanan.view;
 
+import com.penjualanmakanan.controller.BarangController;
+import com.penjualanmakanan.model.Barang;
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  *
  * @author Riett
  */
 public class BarangView extends javax.swing.JFrame {
-
+    
+    List<Barang> listBarang = new ArrayList<>();
+    BarangController barangController = new BarangController();
+    
+    public void tampilBarang(){
+        
+    }
     /**
      * Creates new form Barang
      */
     public BarangView() {
         initComponents();
+        tampilBarang();
     }
 
     /**
@@ -73,25 +86,25 @@ public class BarangView extends javax.swing.JFrame {
         judul.setText("Daftar Barang");
 
         kembali.setBackground(new java.awt.Color(203, 220, 219));
-        kembali.setText("Back");
+        kembali.setText("Kembali");
         kembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kembaliActionPerformed(evt);
             }
         });
 
-        insert.setText("Insert");
+        insert.setText("Tambah");
         insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertActionPerformed(evt);
             }
         });
 
-        update.setText("Update");
+        update.setText("Perbarui");
 
-        delete.setText("Delete");
+        delete.setText("Hapus");
 
-        refresh.setText("Refresh");
+        refresh.setText("Segarkan");
 
         jLabel1.setText("Input Barang");
 
@@ -150,7 +163,7 @@ public class BarangView extends javax.swing.JFrame {
                         .addComponent(insert)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(update)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(delete)
@@ -205,7 +218,9 @@ public class BarangView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliActionPerformed
-        // TODO add your handling code here:
+        BerandaView beranda = new BerandaView();
+        beranda.setVisible(true);
+        dispose();
     }//GEN-LAST:event_kembaliActionPerformed
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed

@@ -76,15 +76,15 @@ public class TransaksiView extends javax.swing.JFrame {
                     "No.","ID Transaksi", "Tanggal Transaksi", "Total Barang", "Total Harga"
                 }
             )
-            {
-                boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false
-                };
-
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }
-            }
+//            {
+//                boolean[] canEdit = new boolean[]{
+//                    false, false, false, false, false
+//                };
+//
+//                public boolean isCellEditable(int rowIndex, int columnIndex) {
+//                    return canEdit[columnIndex];
+//                }
+//            }
         );
     }
 
@@ -104,7 +104,7 @@ public class TransaksiView extends javax.swing.JFrame {
         Id_Transaksi = new javax.swing.JTextField();
         Tanggal_Now = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        Pilihan_Barang = new javax.swing.JComboBox<>();
+        Pilihan_Barang = new javax.swing.JComboBox<String>();
         jLabel4 = new javax.swing.JLabel();
         Jumlah_Barang = new javax.swing.JTextField();
         Button_Tambah = new javax.swing.JButton();
@@ -116,6 +116,7 @@ public class TransaksiView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         Tabel_Transaksi = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,7 +151,7 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jLabel3.setText("Barang");
 
-        Pilihan_Barang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Pilihan_Barang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Pilihan_Barang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Pilihan_BarangActionPerformed(evt);
@@ -197,6 +198,13 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jLabel7.setText("Beranda >> Transaksi");
 
+        jButton1.setText("Kembali");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -233,7 +241,8 @@ public class TransaksiView extends javax.swing.JFrame {
                                 .addComponent(Button_Tambah))
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -267,6 +276,8 @@ public class TransaksiView extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -292,6 +303,12 @@ public class TransaksiView extends javax.swing.JFrame {
     private void Tanggal_NowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tanggal_NowActionPerformed
         menampilkanTanggal();
     }//GEN-LAST:event_Tanggal_NowActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        BerandaView beranda = new BerandaView();
+        beranda.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,6 +355,7 @@ public class TransaksiView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Pilihan_Barang;
     private javax.swing.JTable Tabel_Transaksi;
     private javax.swing.JTextField Tanggal_Now;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

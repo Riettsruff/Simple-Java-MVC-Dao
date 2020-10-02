@@ -15,6 +15,14 @@ public class Barang {
     private int stok;
     private int harga;
 
+    public Barang(String string, String string0, int aInt, int aInt0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Barang() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getId() {
         return id;
     }
