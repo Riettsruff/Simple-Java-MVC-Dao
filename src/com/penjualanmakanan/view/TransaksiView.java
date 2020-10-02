@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.controller.TransaksiController;
 import com.penjualanmakanan.model.Transaksi;
-import java.text.SimpleDateFormat;
+import com.penjualanmakanan.util.FormatRupiah;
+import com.penjualanmakanan.util.FormatTanggal;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,20 +41,25 @@ class Process extends Thread {
 public class TransaksiView extends javax.swing.JFrame {
     
     List<Transaksi> listTransaksi = new ArrayList<>();
+    
+    TransaksiController transaksiController = new TransaksiController();
     DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
+    
+    FormatRupiah formatRupiah = new FormatRupiah();
+    FormatTanggal formatTanggal = new FormatTanggal();
     
     /**
      * Creates new form Transaksi
      */
     public TransaksiView() {
         initComponents();
+        initFormValue();
         bindingTabelTransaksi();
     }
     
-    public void menampilkanTanggal(){
-        Date tanggal = new Date();
-        SimpleDateFormat tampil = new SimpleDateFormat("dd-MM-yyyy");
-        Tanggal_Now.setText(tampil.format(tanggal));
+    public void initFormValue() {
+        Id_Transaksi.setText(transaksiController.getMaxIdTransaksi());
+        Tanggal_Transaksi.setText(formatTanggal.getValue(new Date(), "dd-MM-yyyy"));
     }
     
     public void bindingTabelTransaksi() {
@@ -66,7 +72,7 @@ public class TransaksiView extends javax.swing.JFrame {
             obj[i][1] = listTransaksi.get(i).getId();
             obj[i][2] = listTransaksi.get(i).getTglTransaksi();
             obj[i][3] = String.valueOf(detailTransaksiController.getTotalBarangByIdTransaksi(listTransaksi.get(i).getId()));
-            obj[i][4] = String.valueOf(detailTransaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
+            obj[i][4] = formatRupiah.kurensi(detailTransaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
         }
         
         Tabel_Transaksi.setModel(
@@ -102,7 +108,7 @@ public class TransaksiView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Id_Transaksi = new javax.swing.JTextField();
-        Tanggal_Now = new javax.swing.JTextField();
+        Tanggal_Transaksi = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Pilihan_Barang = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -136,15 +142,26 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jLabel2.setText("Tanggal");
 
+        Id_Transaksi.setEditable(false);
+        Id_Transaksi.setBackground(new java.awt.Color(230, 230, 230));
+        Id_Transaksi.setEnabled(false);
+        Id_Transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Id_TransaksiMouseClicked(evt);
+            }
+        });
         Id_Transaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Id_TransaksiActionPerformed(evt);
             }
         });
 
-        Tanggal_Now.addActionListener(new java.awt.event.ActionListener() {
+        Tanggal_Transaksi.setEditable(false);
+        Tanggal_Transaksi.setBackground(new java.awt.Color(230, 230, 230));
+        Tanggal_Transaksi.setEnabled(false);
+        Tanggal_Transaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Tanggal_NowActionPerformed(evt);
+                Tanggal_TransaksiActionPerformed(evt);
             }
         });
 
@@ -166,6 +183,11 @@ public class TransaksiView extends javax.swing.JFrame {
         });
 
         Button_Tambah.setText("Tambah");
+        Button_Tambah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Button_TambahMouseClicked(evt);
+            }
+        });
         Button_Tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_TambahActionPerformed(evt);
@@ -222,7 +244,7 @@ public class TransaksiView extends javax.swing.JFrame {
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Tanggal_Now)
+                                    .addComponent(Tanggal_Transaksi)
                                     .addComponent(Id_Transaksi)
                                     .addComponent(Pilihan_Barang, 0, 95, Short.MAX_VALUE))
                                 .addGap(24, 24, 24)
@@ -248,7 +270,7 @@ public class TransaksiView extends javax.swing.JFrame {
                     .addComponent(Id_Transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Tanggal_Now, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tanggal_Transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -274,7 +296,7 @@ public class TransaksiView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Id_TransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Id_TransaksiActionPerformed
-        Id_Transaksi.setEnabled(false);
+       
     }//GEN-LAST:event_Id_TransaksiActionPerformed
 
     private void Jumlah_BarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jumlah_BarangActionPerformed
@@ -289,9 +311,18 @@ public class TransaksiView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Button_TambahActionPerformed
 
-    private void Tanggal_NowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tanggal_NowActionPerformed
-        menampilkanTanggal();
-    }//GEN-LAST:event_Tanggal_NowActionPerformed
+    private void Tanggal_TransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tanggal_TransaksiActionPerformed
+        
+    }//GEN-LAST:event_Tanggal_TransaksiActionPerformed
+
+    private void Button_TambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button_TambahMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Button_TambahMouseClicked
+
+    private void Id_TransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Id_TransaksiMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_Id_TransaksiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -337,7 +368,7 @@ public class TransaksiView extends javax.swing.JFrame {
     private javax.swing.JTextField Jumlah_Barang;
     private javax.swing.JComboBox<String> Pilihan_Barang;
     private javax.swing.JTable Tabel_Transaksi;
-    private javax.swing.JTextField Tanggal_Now;
+    private javax.swing.JTextField Tanggal_Transaksi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
