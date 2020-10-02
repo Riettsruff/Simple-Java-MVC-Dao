@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.DetailTransaksi;
+import java.sql.Types;
 /**
  *
  * @author Riett
@@ -48,55 +49,11 @@ public class DetailTransaksiController {
 
        return listDetailTransaksi;
    }
-    
-   public long getTotalHargaByIdTransaksi(String idTransaksi) {
-       long totalHarga = 0;
-       
-       try {
-           String query = "SELECT SUM(b.jml_barang * c.harga) AS \"Total Harga\" FROM transaksi a INNER JOIN detail_transaksi b ON a.id = b.id_transaksi LEFT JOIN barang c ON b.id_barang = c.id";
-           query += " WHERE a.id = \"" + idTransaksi + "\"";
-           
-           PreparedStatement ps = conn.prepareStatement(query);
-           ResultSet rs = ps.executeQuery();
-           
-           if (rs.next()) {
-               totalHarga = rs.getInt(1);
-           } 
-       } catch (SQLException se) {
-           se.printStackTrace();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       
-       return totalHarga;
-   }
-   
-   public int getTotalBarangByIdTransaksi(String idTransaksi) {
-       int totalBarang = 0;
-       
-       try {
-           String query = "SELECT SUM(b.jml_barang) AS \"total_barang\" FROM transaksi a INNER JOIN detail_transaksi b ON a.id = b.id_transaksi";
-           query += " WHERE a.id = \"" + idTransaksi + "\"";
-           
-           PreparedStatement ps = conn.prepareStatement(query);
-           ResultSet rs = ps.executeQuery();
-           
-           if (rs.next()) {
-               totalBarang = rs.getInt(1);
-           } 
-       } catch (SQLException se) {
-           se.printStackTrace();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       
-       return totalBarang;
-   }
    
    public boolean insertDetailTransaksi(DetailTransaksi detailTransaksi) {
        try {
            PreparedStatement ps = conn.prepareStatement("INSERT INTO detail_transaksi (id, jml_barang, id_barang, id_transaksi) VALUES (?, ?, ?, ?)");
-           ps.setInt(1, detailTransaksi.getId());
+           ps.setInt(1, Types.NULL);
            ps.setInt(2, detailTransaksi.getJmlBarang());
            ps.setString(3, detailTransaksi.getIdBarang());
            ps.setString(4, detailTransaksi.getIdTransaksi());
