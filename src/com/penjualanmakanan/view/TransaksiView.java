@@ -5,17 +5,32 @@
  */
 package com.penjualanmakanan.view;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.penjualanmakanan.controller.BarangController;
+import com.penjualanmakanan.model.Barang;
+
 /**
  *
  * @author Riett
  */
 public class TransaksiView extends javax.swing.JFrame {
+    
+    List<Barang> listBarang = new ArrayList<>();
 
     /**
      * Creates new form Transaksi
      */
     public TransaksiView() {
         initComponents();
+        
+        BarangController barangController = new BarangController();
+        
+        listBarang = barangController.getAllBarang();
+        
+        for(int i = 0; i < listBarang.size(); i++) {
+            System.out.println(listBarang.get(i).getNama());
+        }
     }
 
     /**
