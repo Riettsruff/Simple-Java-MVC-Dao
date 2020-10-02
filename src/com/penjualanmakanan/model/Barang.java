@@ -47,4 +47,8 @@ public class Barang {
         this.harga = harga;
     }
     
+    @Override
+    public String toString() {
+        return nama;
+    }
 }
