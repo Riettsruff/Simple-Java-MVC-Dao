@@ -10,33 +10,41 @@ package com.penjualanmakanan.model;
  * @author Riett
  */
 public class Barang {
-    private String Id;
-    private String Nama;
-    private int Stok;
-    private int Harga;
+    private String id;
+    private String nama;
+    private int stok;
+    private int harga;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(String Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    public String getNama() {
+        return nama;
+    }
+    
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public int getStok() {
-        return Stok;
+        return stok;
     }
 
-    public void setStok(int Stok) {
-        this.Stok = Stok;
+    public void setStok(int stok) {
+        this.stok = stok;
     }
 
     public int getHarga() {
-        return Harga;
+        return harga;
     }
 
-    public void setHarga(int Harga) {
-        this.Harga = Harga;
+    public void setHarga(int harga) {
+        this.harga = harga;
     }
     
 }
