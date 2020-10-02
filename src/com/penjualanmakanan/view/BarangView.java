@@ -6,23 +6,77 @@
 package com.penjualanmakanan.view;
 
 import com.penjualanmakanan.controller.BarangController;
-import com.penjualanmakanan.model.Barang;
 import java.util.ArrayList;
 import java.util.List;
+import com.penjualanmakanan.model.Barang;
+import com.penjualanmakanan.util.FormatRupiah;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
+class ProcessBarang extends Thread {
+
+    BarangView barangView;
+
+    public ProcessBarang(BarangView v) {
+        this.barangView = v;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            barangView.tampilBarang();
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}
 
 /**
  *
  * @author Riett
  */
 public class BarangView extends javax.swing.JFrame {
-    
+
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
-    
-    public void tampilBarang(){
-        
+    FormatRupiah formatRupiah = new FormatRupiah();
+
+    public void tampilBarang() {
+        listBarang = new BarangController().getAllBarang();
+
+        Object[][] obj = new Object[listBarang.size()][5];
+
+        for (int i = 0; i < listBarang.size(); i++) {
+            obj[i][0] = (i + 1) + ".";
+            obj[i][1] = listBarang.get(i).getId();
+            obj[i][2] = listBarang.get(i).getNama();
+            obj[i][3] = listBarang.get(i).getStok();
+            obj[i][4] = formatRupiah.kurensi(listBarang.get(i).getHarga());
+        }
+
+        tabelBarang.setModel(
+                new javax.swing.table.DefaultTableModel(
+                        obj,
+                        new String[]{
+                            "No.", "ID Barang", "Nama Barang", "Stok Barang", "Harga Barang"
+                        }
+                ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        }
+        );
     }
+
     /**
      * Creates new form Barang
      */
@@ -169,19 +223,19 @@ public class BarangView extends javax.swing.JFrame {
                         .addComponent(delete)
                         .addGap(18, 18, 18)
                         .addComponent(refresh)
-                        .addContainerGap())
+                        .addGap(303, 303, 303))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(judul)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
                         .addComponent(jLabel1)
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,22 +248,19 @@ public class BarangView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(inputStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(inputHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)))
+                            .addComponent(inputStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(inputHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(insert)
                     .addComponent(update)
                     .addComponent(delete)
                     .addComponent(refresh))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(kembali)
                 .addContainerGap())
         );
