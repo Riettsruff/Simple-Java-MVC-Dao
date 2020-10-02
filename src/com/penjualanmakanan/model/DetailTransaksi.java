@@ -10,16 +10,16 @@ package com.penjualanmakanan.model;
  * @author Riett
  */
 public class DetailTransaksi {
-    private String id;
+    private int id;
     private int jmlBarang;
-    private int idTransaksi;
+    private String idTransaksi;
     private String idBarang;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -31,11 +31,11 @@ public class DetailTransaksi {
         this.jmlBarang = jmlBarang;
     }
 
-    public int getidTransaksi() {
+    public String getidTransaksi() {
         return idTransaksi;
     }
 
-    public void setidTransaksi(int idTransaksi) {
+    public void setidTransaksi(String idTransaksi) {
         this.idTransaksi = idTransaksi;
     }
 
