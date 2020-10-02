@@ -5,6 +5,7 @@
  */
 package com.penjualanmakanan.view;
 
+import com.penjualanmakanan.controller.DetailTransaksiController;
 import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.controller.TransaksiController;
@@ -39,7 +40,7 @@ class Process extends Thread {
 public class TransaksiView extends javax.swing.JFrame {
     
     List<Transaksi> listTransaksi = new ArrayList<>();
-    DefaultTableModel tableModel;
+    DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
     
     /**
      * Creates new form Transaksi
@@ -56,27 +57,23 @@ public class TransaksiView extends javax.swing.JFrame {
     }
     
     public void bindingTabelTransaksi() {
-        tableModel = new DefaultTableModel();
-        Tabel_Transaksi.setModel(tableModel);
-        tableModel.addColumn("No.");
-        tableModel.addColumn("ID Transaksi");
-        tableModel.addColumn("Tanggal Transaksi");
-        
         listTransaksi = new TransaksiController().getAllTransaksi();
         
-        Object [][] obj = new Object[listTransaksi.size()][3];
+        Object [][] obj = new Object[listTransaksi.size()][5];
         
         for (int i = 0; i < listTransaksi.size();i++){
             obj[i][0] = (i+1) + ".";
             obj[i][1] = listTransaksi.get(i).getId();
             obj[i][2] = listTransaksi.get(i).getTglTransaksi();
+            obj[i][3] = String.valueOf(detailTransaksiController.getTotalBarangByIdTransaksi(listTransaksi.get(i).getId()));
+            obj[i][4] = String.valueOf(detailTransaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
         }
         
         Tabel_Transaksi.setModel(
             new javax.swing.table.DefaultTableModel(
                 obj,
                 new String [] {
-                    "No.","ID Transaksi", "Tanggal Transaksi"
+                    "No.","ID Transaksi", "Tanggal Transaksi", "Total Barang", "Total Harga"
                 }
             )
             {
@@ -207,6 +204,7 @@ public class TransaksiView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -215,26 +213,25 @@ public class TransaksiView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(31, 31, 31))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Tanggal_Now)
-                            .addComponent(Id_Transaksi)
-                            .addComponent(Pilihan_Barang, 0, 95, Short.MAX_VALUE))
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Jumlah_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Button_Tambah))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3))
+                                        .addGap(31, 31, 31))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Tanggal_Now)
+                                    .addComponent(Id_Transaksi)
+                                    .addComponent(Pilihan_Barang, 0, 95, Short.MAX_VALUE))
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Jumlah_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(Button_Tambah))
                             .addComponent(jLabel6)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel5))
                         .addGap(0, 0, Short.MAX_VALUE)))
