@@ -5,16 +5,21 @@
  */
 package com.penjualanmakanan.view;
 
+import com.penjualanmakanan.controller.BarangController;
 import com.penjualanmakanan.controller.DetailTransaksiController;
 import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.controller.TransaksiController;
+import com.penjualanmakanan.model.Barang;
+import com.penjualanmakanan.model.DetailTransaksi;
+import com.penjualanmakanan.model.KeranjangBelanja;
 import com.penjualanmakanan.model.Transaksi;
 import com.penjualanmakanan.util.FormatRupiah;
 import com.penjualanmakanan.util.FormatTanggal;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 class Process extends Thread {
@@ -39,14 +44,15 @@ class Process extends Thread {
 }
 
 public class TransaksiView extends javax.swing.JFrame {
-    
     List<Transaksi> listTransaksi = new ArrayList<>();
+    List<Barang> listBarang = new ArrayList<>();
+    List<KeranjangBelanja> listBarangBelanjaan = new ArrayList<>();
     
+    BarangController barangController = new BarangController();
     TransaksiController transaksiController = new TransaksiController();
     DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
     
     FormatRupiah formatRupiah = new FormatRupiah();
-    FormatTanggal formatTanggal = new FormatTanggal();
     
     /**
      * Creates new form Transaksi
@@ -58,8 +64,27 @@ public class TransaksiView extends javax.swing.JFrame {
     }
     
     public void initFormValue() {
-        Id_Transaksi.setText(transaksiController.getMaxIdTransaksi());
-        Tanggal_Transaksi.setText(formatTanggal.getValue(new Date(), "dd-MM-yyyy"));
+        if(Pilihan_Barang.getItemCount() == 0) {
+            Pilihan_Barang.addItem("-Pilih Barang-");
+            listBarang = barangController.getAllBarang();
+
+            for (int i = 0; i < listBarang.size();i++){
+                Pilihan_Barang.addItem(listBarang.get(i));
+            }
+        }
+        
+        Pilihan_Barang.setSelectedIndex(0);
+        
+        int maxIdTransaksi = Integer.parseInt(transaksiController.getMaxIdTransaksi());
+        Id_Transaksi.setText("TR" + String.format("%03d", ++maxIdTransaksi));
+        
+        Tanggal_Transaksi.setText(new FormatTanggal(new Date(), "dd-MM-yyyy").toString());
+        
+        Jumlah_Barang.setText("");
+        
+        listBarangBelanjaan.clear();
+        
+        Daftar_Barang_Belanjaan.setText("");
     }
     
     public void bindingTabelTransaksi() {
@@ -71,8 +96,8 @@ public class TransaksiView extends javax.swing.JFrame {
             obj[i][0] = (i+1) + ".";
             obj[i][1] = listTransaksi.get(i).getId();
             obj[i][2] = listTransaksi.get(i).getTglTransaksi();
-            obj[i][3] = String.valueOf(detailTransaksiController.getTotalBarangByIdTransaksi(listTransaksi.get(i).getId()));
-            obj[i][4] = formatRupiah.kurensi(detailTransaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
+            obj[i][3] = String.valueOf(transaksiController.getTotalBarangByIdTransaksi(listTransaksi.get(i).getId()));
+            obj[i][4] = formatRupiah.kurensi(transaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
         }
         
         Tabel_Transaksi.setModel(
@@ -105,6 +130,7 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Id_Transaksi = new javax.swing.JTextField();
@@ -116,7 +142,7 @@ public class TransaksiView extends javax.swing.JFrame {
         Button_Tambah = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Daftar_Barang = new javax.swing.JTextArea();
+        Daftar_Barang_Belanjaan = new javax.swing.JTextArea();
         Button_Simpan = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -168,7 +194,6 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jLabel3.setText("Barang");
 
-        Pilihan_Barang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Pilihan_Barang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Pilihan_BarangActionPerformed(evt);
@@ -195,15 +220,20 @@ public class TransaksiView extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Daftar Barang");
+        jLabel5.setText("Daftar Barang Belanjaan");
 
-        Daftar_Barang.setColumns(20);
-        Daftar_Barang.setRows(5);
-        jScrollPane1.setViewportView(Daftar_Barang);
+        Daftar_Barang_Belanjaan.setColumns(20);
+        Daftar_Barang_Belanjaan.setRows(5);
+        jScrollPane1.setViewportView(Daftar_Barang_Belanjaan);
 
         Button_Simpan.setText("Simpan");
+        Button_Simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_SimpanActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("Tabel Transaksi");
+        jLabel6.setText("Daftar Transaksi");
 
         Tabel_Transaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,33 +269,34 @@ public class TransaksiView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Button_Simpan))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5)
+                    .addComponent(Kembali)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addGap(31, 31, 31))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Tanggal_Transaksi)
-                                    .addComponent(Id_Transaksi)
-                                    .addComponent(Pilihan_Barang, 0, 95, Short.MAX_VALUE))
-                                .addGap(24, 24, 24)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Pilihan_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(Jumlah_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
-                                .addComponent(Button_Tambah))
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5)
-                            .addComponent(Kembali))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(40, 40, 40)
+                                .addComponent(Button_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Tanggal_Transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                    .addComponent(Id_Transaksi))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -319,7 +350,70 @@ public class TransaksiView extends javax.swing.JFrame {
     }//GEN-LAST:event_Pilihan_BarangActionPerformed
 
     private void Button_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TambahActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
+        if(Pilihan_Barang.getSelectedItem().toString().equals("-Pilih Barang-")) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih barang terlebih dahulu", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        
+        if(Jumlah_Barang.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Jumlah barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        
+        int jumlahBarang = Integer.parseInt(Jumlah_Barang.getText());
+        
+        if(jumlahBarang == 0) {
+            JOptionPane.showMessageDialog(this, "Jumlah barang minimal 1", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+                
+        Barang barangTerpilih = (Barang) Pilihan_Barang.getSelectedItem();
+        KeranjangBelanja barangTerbeli = new KeranjangBelanja();
+        
+        int jumlahBarangTerbeli = jumlahBarang;
+        int stokTersedia = barangController.getStokByIdBarang(barangTerpilih.getId());
+        int indexOfTargetBarangBelanjaan = -1;
+        
+        for(int i = 0; i < listBarangBelanjaan.size(); i++) {
+            if(listBarangBelanjaan.get(i).getIdBarang() == barangTerpilih.getId()) {
+                indexOfTargetBarangBelanjaan = i;
+                break;
+            }
+        }
+        
+        if(indexOfTargetBarangBelanjaan != -1) {
+            stokTersedia -= listBarangBelanjaan.get(indexOfTargetBarangBelanjaan).getJumlahBarang();
+        }
+        
+        if(jumlahBarangTerbeli > stokTersedia) {
+            JOptionPane.showMessageDialog(this, "Stok " + barangTerpilih.getNama() + " tersisa " + stokTersedia, "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        barangTerbeli.setIdBarang(barangTerpilih.getId());
+        barangTerbeli.setNamaBarang(barangTerpilih.getNama());
+        
+        if(indexOfTargetBarangBelanjaan != -1) {
+            barangTerbeli.setJumlahBarang(jumlahBarangTerbeli + listBarangBelanjaan.get(indexOfTargetBarangBelanjaan).getJumlahBarang());
+            listBarangBelanjaan.remove(indexOfTargetBarangBelanjaan);
+        } else {
+            barangTerbeli.setJumlahBarang(jumlahBarangTerbeli);
+        }
+        
+        listBarangBelanjaan.add(barangTerbeli);
+        
+        String daftarBarangBelanjaan = "";
+        
+        for(int i = 0; i < listBarangBelanjaan.size(); i++) {
+            daftarBarangBelanjaan += listBarangBelanjaan.get(i).toString();
+            
+            if(i < listBarangBelanjaan.size() - 1) {
+                daftarBarangBelanjaan += ", ";
+            }
+        }
+        
+        Daftar_Barang_Belanjaan.setText(daftarBarangBelanjaan);
     }//GEN-LAST:event_Button_TambahActionPerformed
 
     private void Tanggal_TransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tanggal_TransaksiActionPerformed
@@ -340,6 +434,44 @@ public class TransaksiView extends javax.swing.JFrame {
         beranda.setVisible(true);
         dispose();
     }//GEN-LAST:event_KembaliActionPerformed
+
+    private void Button_SimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SimpanActionPerformed
+        // TODO add your handling code here:
+        if(listBarangBelanjaan.size() > 0) {
+            Transaksi transaksi = new Transaksi();
+            transaksi.setId(Id_Transaksi.getText());
+            transaksi.setTglTransaksi(new FormatTanggal(new Date(), "yyyy-MM-dd").toString());
+
+            boolean insertTransaksi = transaksiController.insertTransaksi(transaksi);
+
+            if(insertTransaksi) {
+                for(int i = 0; i < listBarangBelanjaan.size(); i++) {
+                    DetailTransaksi detailTransaksi = new DetailTransaksi();
+                    detailTransaksi.setJmlBarang(listBarangBelanjaan.get(i).getJumlahBarang());
+                    detailTransaksi.setIdBarang(listBarangBelanjaan.get(i).getIdBarang());
+                    detailTransaksi.setIdTransaksi(transaksi.getId());
+                    
+                    boolean insertDetailTransaksi = detailTransaksiController.insertDetailTransaksi(detailTransaksi);
+                    
+                    if(!insertDetailTransaksi) {
+                        JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+                        transaksiController.deleteTransaksiByIdTransaksi(transaksi.getId());
+                        return;
+                    }
+                }
+                
+                JOptionPane.showMessageDialog(this, "Transaksi berhasil");
+                initFormValue();
+                bindingTabelTransaksi();
+            } else {
+                JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Daftar Barang Belanjaan masih kosong", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_Button_SimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,11 +512,11 @@ public class TransaksiView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Simpan;
     private javax.swing.JButton Button_Tambah;
-    private javax.swing.JTextArea Daftar_Barang;
+    private javax.swing.JTextArea Daftar_Barang_Belanjaan;
     private javax.swing.JTextField Id_Transaksi;
     private javax.swing.JTextField Jumlah_Barang;
     private javax.swing.JButton Kembali;
-    private javax.swing.JComboBox<String> Pilihan_Barang;
+    private javax.swing.JComboBox<Object> Pilihan_Barang;
     private javax.swing.JTable Tabel_Transaksi;
     private javax.swing.JTextField Tanggal_Transaksi;
     private javax.swing.JLabel jLabel1;
@@ -394,6 +526,7 @@ public class TransaksiView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
