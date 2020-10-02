@@ -122,6 +122,7 @@ public class TransaksiView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         Tabel_Transaksi = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        Kembali = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -219,6 +220,13 @@ public class TransaksiView extends javax.swing.JFrame {
 
         jLabel7.setText("Beranda >> Transaksi");
 
+        Kembali.setText("Kembali");
+        Kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,7 +263,8 @@ public class TransaksiView extends javax.swing.JFrame {
                                 .addComponent(Button_Tambah))
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(Kembali))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -289,6 +298,8 @@ public class TransaksiView extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Kembali)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -323,6 +334,12 @@ public class TransaksiView extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_Id_TransaksiMouseClicked
+
+    private void KembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KembaliActionPerformed
+        BerandaView beranda = new BerandaView();
+        beranda.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_KembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,6 +383,7 @@ public class TransaksiView extends javax.swing.JFrame {
     private javax.swing.JTextArea Daftar_Barang;
     private javax.swing.JTextField Id_Transaksi;
     private javax.swing.JTextField Jumlah_Barang;
+    private javax.swing.JButton Kembali;
     private javax.swing.JComboBox<String> Pilihan_Barang;
     private javax.swing.JTable Tabel_Transaksi;
     private javax.swing.JTextField Tanggal_Transaksi;
