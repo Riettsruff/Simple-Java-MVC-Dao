@@ -108,6 +108,8 @@ public class BarangView extends javax.swing.JFrame {
         
         tampilBarang();
     }
+    
+    
 
     /**
      * Creates new form Barang
@@ -376,6 +378,23 @@ public class BarangView extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+            
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        barang.setNama(inputNama.getText());
+        barang.setStok(Integer.parseInt(inputStok.getText()));
+        
+        
+        boolean updateBarang = barangController.updateBarang(barang);
+        
+        if(updateBarang) {
+            JOptionPane.showMessageDialog(this, "Update barang berhasil");
+            initData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Update barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
     }//GEN-LAST:event_updateActionPerformed
 
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
