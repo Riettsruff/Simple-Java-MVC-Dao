@@ -28,8 +28,11 @@ public class BarangController {
 
     public List<Barang> getAllBarang() {
         List<Barang> listBarang = new ArrayList<>();
+        
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT id, nama, stok, harga FROM `barang`");
+            String query = "SELECT id, nama, stok, harga FROM `barang`";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -54,10 +57,10 @@ public class BarangController {
     }
 
     public boolean deleteBarang(Barang barang) {
-        String sql = "delete from barang where id=?";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-
+            String query = "DELETE From barang WHERE id=?";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, barang.getId());
 
             if (ps.executeUpdate() > 0) {
@@ -68,13 +71,15 @@ public class BarangController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return false;
-
     }
 
     public boolean insertBarang(Barang barang) {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)");
+            String query = "INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, barang.getId());
             ps.setString(2, barang.getNama());
             ps.setInt(3, barang.getStok());
@@ -96,8 +101,11 @@ public class BarangController {
         String maxIdBarang = "001";
 
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT RIGHT((SElECT MAX(id) AS max_id FROM barang), 3) AS \"max_id\"");
+            String query = "SELECT RIGHT((SElECT MAX(id) AS max_id FROM barang), 3) AS \"max_id\"";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
+            
             while (rs.next()) {
                 if (rs.getString("max_id") != null) {
                     maxIdBarang = rs.getString("max_id");
@@ -116,10 +124,11 @@ public class BarangController {
         int stok = 0;
 
         try {
-            String query = "SELECT stok FROM barang";
-            query += " WHERE id = \"" + idBarang + "\"";
+            String query = "SELECT stok FROM barang WHERE id = ?";
 
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, idBarang);
+                    
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -135,15 +144,14 @@ public class BarangController {
     }
 
     public boolean updateBarang(Barang barang) {
-        String sql = "UPDATE barang SET nama= ?, stok= ?, harga=? WHERE id = ?";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-
+            String query = "UPDATE barang SET nama = ?, stok = ?, harga = ? WHERE id = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, barang.getNama());
             ps.setInt(2, barang.getStok());
             ps.setInt(3, barang.getHarga());
             ps.setString(4, barang.getId());
-            
             
             if (ps.executeUpdate() > 0) {
                 return true;

@@ -27,7 +27,9 @@ public class TransaksiController {
         List<Transaksi> listTransaksi = new ArrayList<>();
         
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT id, date_format(tgl_transaksi, '%d-%m-%Y') AS tgl_transaksi FROM transaksi");
+            String query = "SELECT id, date_format(tgl_transaksi, '%d-%m-%Y') AS tgl_transaksi FROM transaksi";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()) {
@@ -52,9 +54,10 @@ public class TransaksiController {
        
        try {
            String query = "SELECT SUM(b.jml_barang * c.harga) AS \"Total Harga\" FROM transaksi a INNER JOIN detail_transaksi b ON a.id = b.id_transaksi LEFT JOIN barang c ON b.id_barang = c.id";
-           query += " WHERE a.id = \"" + idTransaksi + "\"";
+           query += " WHERE a.id = ?";
            
            PreparedStatement ps = conn.prepareStatement(query);
+           ps.setString(1, idTransaksi);
            ResultSet rs = ps.executeQuery();
            
            if (rs.next()) {
@@ -74,9 +77,10 @@ public class TransaksiController {
        
        try {
            String query = "SELECT SUM(b.jml_barang) AS \"total_barang\" FROM transaksi a INNER JOIN detail_transaksi b ON a.id = b.id_transaksi";
-           query += " WHERE a.id = \"" + idTransaksi + "\"";
+           query += " WHERE a.id = ?";
            
            PreparedStatement ps = conn.prepareStatement(query);
+           ps.setString(1, idTransaksi);
            ResultSet rs = ps.executeQuery();
            
            if (rs.next()) {
@@ -95,8 +99,11 @@ public class TransaksiController {
         String maxIdTransaksi = "001";
         
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT RIGHT((SElECT MAX(id) AS max_id FROM transaksi), 3) AS \"max_id\"");
+            String query = "SELECT RIGHT((SElECT MAX(id) AS max_id FROM transaksi), 3) AS \"max_id\"";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
+            
             while(rs.next()) {
                 if(rs.getString("max_id")!=null) {
                     maxIdTransaksi = rs.getString("max_id");
@@ -113,7 +120,9 @@ public class TransaksiController {
     
     public boolean insertTransaksi(Transaksi transaksi) {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO transaksi (id, tgl_transaksi) VALUES (?, ?)");
+            String query = "INSERT INTO transaksi (id, tgl_transaksi) VALUES (?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, transaksi.getId());
             ps.setString(2, transaksi.getTglTransaksi());
             
@@ -131,8 +140,11 @@ public class TransaksiController {
     
     public boolean deleteTransaksiByIdTransaksi(String idTransaksi) {
         try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM transaksi "
-                    + "WHERE id='" + idTransaksi + "'");
+            String query = "DELETE FROM transaksi WHERE id = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, idTransaksi);
+                    
             if (ps.executeUpdate() > 0) {
                 return true;
             }
@@ -146,10 +158,10 @@ public class TransaksiController {
     }
     
     public boolean updateTransaksi(Transaksi transaksi) {
-        String sql = "UPDATE transaksi SET tgl_transaksi= ? WHERE id= ?";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-
+            String query = "UPDATE transaksi SET tgl_transaksi=? WHERE id=?";
+            
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, transaksi.getTglTransaksi());
             ps.setString(2, transaksi.getId());
                      
