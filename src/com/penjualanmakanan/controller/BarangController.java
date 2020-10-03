@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.Barang;
+import static com.penjualanmakanan.util.Koneksi.Koneksi;
 
 /**
  *
@@ -23,7 +24,7 @@ public class BarangController {
     Connection conn;
 
     public BarangController() {
-        conn = (Connection) new Koneksi().getKoneksi();
+        conn = Koneksi();
     }
 
     public List<Barang> getAllBarang() {
