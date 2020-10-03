@@ -144,4 +144,24 @@ public class TransaksiController {
         
         return false;
     }
+    
+    public boolean updateTransaksi(Transaksi transaksi) {
+        String sql = "UPDATE transaksi SET tgl_transaksi= ? WHERE id= ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, transaksi.getTglTransaksi());
+            ps.setString(2, transaksi.getId());
+                     
+            if (ps.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
