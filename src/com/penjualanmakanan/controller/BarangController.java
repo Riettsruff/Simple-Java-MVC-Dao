@@ -51,6 +51,25 @@ public class BarangController {
         
     }
     
+    public boolean deleteBarang(Barang barang){
+        String sql = "delete from barang where id=?";
+        try {
+           PreparedStatement ps = conn.prepareStatement(sql);
+           
+           ps.setString(1,barang.getId());
+           
+           if (ps.executeUpdate() > 0){
+               return true;
+           }
+       } catch (SQLException se) {
+           se.printStackTrace();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+        return false;
+        
+    }
+    
     public boolean insertBarang(Barang barang) {
        try {
            PreparedStatement ps = conn.prepareStatement("INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)");

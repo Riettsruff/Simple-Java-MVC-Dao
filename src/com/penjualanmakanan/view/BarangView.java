@@ -46,7 +46,7 @@ public class BarangView extends javax.swing.JFrame {
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
-
+    
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
         
@@ -207,6 +207,11 @@ public class BarangView extends javax.swing.JFrame {
         });
 
         refresh.setText("Segarkan");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Input Barang");
 
@@ -333,8 +338,6 @@ public class BarangView extends javax.swing.JFrame {
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
-        
-        
         insertBarang();
     }//GEN-LAST:event_insertActionPerformed
 
@@ -347,12 +350,19 @@ public class BarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_inputIdActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
-        
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        boolean deleteBarang = barangController.deleteBarang(barang);
+        if(deleteBarang) {
+            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
+            initData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
-        // TODO add your handling code here:
         int baris = tabelBarang.getSelectedRow();
         Object id = tabelBarang.getValueAt(baris, 1);
         Object nama = tabelBarang.getValueAt(baris, 2);
@@ -367,6 +377,10 @@ public class BarangView extends javax.swing.JFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_updateActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        initData();
+    }//GEN-LAST:event_refreshActionPerformed
 
     /**
      * @param args the command line arguments
