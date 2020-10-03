@@ -75,8 +75,7 @@ public class TransaksiView extends javax.swing.JFrame {
         
         Pilihan_Barang.setSelectedIndex(0);
         
-        int maxIdTransaksi = Integer.parseInt(transaksiController.getMaxIdTransaksi());
-        Id_Transaksi.setText("TR" + String.format("%03d", ++maxIdTransaksi));
+        Id_Transaksi.setText("TRX" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
         
         Tanggal_Transaksi.setText(new FormatTanggal(new Date(), "dd-MM-yyyy").toString());
         
@@ -294,8 +293,8 @@ public class TransaksiView extends javax.swing.JFrame {
                                 .addComponent(Button_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Tanggal_Transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                    .addComponent(Id_Transaksi))
+                                    .addComponent(Id_Transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                                    .addComponent(Tanggal_Transaksi))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );

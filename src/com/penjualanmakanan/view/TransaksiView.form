@@ -91,8 +91,8 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Tanggal_Transaksi" pref="118" max="32767" attributes="0"/>
-                                  <Component id="Id_Transaksi" max="32767" attributes="0"/>
+                                  <Component id="Id_Transaksi" pref="176" max="32767" attributes="0"/>
+                                  <Component id="Tanggal_Transaksi" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>

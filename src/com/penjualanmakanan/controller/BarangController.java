@@ -97,29 +97,6 @@ public class BarangController {
         return false;
     }
 
-    public String getMaxIdBarang() {
-        String maxIdBarang = "001";
-
-        try {
-            String query = "SELECT RIGHT((SElECT MAX(id) AS max_id FROM barang), 3) AS \"max_id\"";
-            
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            
-            while (rs.next()) {
-                if (rs.getString("max_id") != null) {
-                    maxIdBarang = rs.getString("max_id");
-                }
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return maxIdBarang;
-    }
-
     public int getStokByIdBarang(String idBarang) {
         int stok = 0;
 

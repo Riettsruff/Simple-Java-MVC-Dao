@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.model.Barang;
 import com.penjualanmakanan.util.FormatRupiah;
+import com.penjualanmakanan.util.FormatTanggal;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -97,8 +99,7 @@ public class BarangView extends javax.swing.JFrame {
     }
     
     public void initData() {
-        int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
-        inputId.setText("BR" + String.format("%03d", ++maxIdBarang));
+        inputId.setText("BRG" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
         
         inputNama.setText("");
         
@@ -259,26 +260,23 @@ public class BarangView extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(inputHarga))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(insert)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(update))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(insert)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(update))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel4))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(inputId, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                                            .addComponent(inputNama)
-                                            .addComponent(inputStok)))
-                                    .addComponent(judul))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(47, 47, 47)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(inputId, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(inputNama)
+                                    .addComponent(inputStok)))
+                            .addComponent(judul))
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(delete)

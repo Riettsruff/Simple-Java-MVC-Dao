@@ -95,29 +95,6 @@ public class TransaksiController {
        return totalBarang;
    }
     
-    public String getMaxIdTransaksi() {
-        String maxIdTransaksi = "001";
-        
-        try {
-            String query = "SELECT RIGHT((SElECT MAX(id) AS max_id FROM transaksi), 3) AS \"max_id\"";
-            
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()) {
-                if(rs.getString("max_id")!=null) {
-                    maxIdTransaksi = rs.getString("max_id");
-                }
-            }  
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        return maxIdTransaksi;
-    }
-    
     public boolean insertTransaksi(Transaksi transaksi) {
         try {
             String query = "INSERT INTO transaksi (id, tgl_transaksi) VALUES (?, ?)";
