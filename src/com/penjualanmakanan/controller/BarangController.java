@@ -135,14 +135,14 @@ public class BarangController {
     }
 
     public boolean updateBarang(Barang barang) {
-        String sql = "UPDATE barang SET nama= ?, stok= ? WHERE id = ?";
+        String sql = "UPDATE barang SET nama= ?, stok= ?, harga=? WHERE id = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, barang.getNama());
             ps.setInt(2, barang.getStok());
-            
-            ps.setString(3, barang.getId());
+            ps.setInt(3, barang.getHarga());
+            ps.setString(4, barang.getId());
             
             
             if (ps.executeUpdate() > 0) {

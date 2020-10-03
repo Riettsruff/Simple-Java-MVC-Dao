@@ -383,7 +383,7 @@ public class BarangView extends javax.swing.JFrame {
         barang.setId(inputId.getText());
         barang.setNama(inputNama.getText());
         barang.setStok(Integer.parseInt(inputStok.getText()));
-        
+        barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
         
         boolean updateBarang = barangController.updateBarang(barang);
         
