@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.Transaksi;
+import static com.penjualanmakanan.util.Koneksi.Koneksi;
 /**
  *
  * @author Riett
@@ -20,7 +21,7 @@ public class TransaksiController {
     Connection conn;
     
     public TransaksiController() {
-        conn = (Connection) new Koneksi().getKoneksi();
+        conn = Koneksi();
     }
     
     public List<Transaksi> getAllTransaksi() {

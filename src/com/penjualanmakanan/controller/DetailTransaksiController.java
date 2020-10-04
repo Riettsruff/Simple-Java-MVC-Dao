@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.DetailTransaksi;
+import static com.penjualanmakanan.util.Koneksi.Koneksi;
 import java.sql.Types;
 /**
  *
@@ -21,7 +22,7 @@ public class DetailTransaksiController {
     Connection conn;
     
     public DetailTransaksiController() {
-        conn = (Connection) new Koneksi().getKoneksi();
+        conn = Koneksi();
     }
     
     public List<DetailTransaksi> getAllDetailTransaksi() {
