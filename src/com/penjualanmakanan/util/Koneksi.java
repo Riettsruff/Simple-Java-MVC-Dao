@@ -6,14 +6,12 @@
 package com.penjualanmakanan.util;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class Koneksi {
-    // JDBC driver name and database URL
-    //  Database credentials
-    private final String USER = "root";
-    private final String PASS = "";
+    
     private static final String DB_URL = "jdbc:mysql://localhost/penjualan_makanan";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "";
