@@ -3,24 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/User/NetBeansProject/PenjualanMakanan/src/com/penjualanmakanan/view/BarangView.java</file>
+            <file>file:/C:/Users/User/NetBeansProject/PenjualanMakanan/src/com/penjualanmakanan/util/Koneksi.java</file>
             <file>file:/C:/Users/User/NetBeansProject/PenjualanMakanan/src/com/penjualanmakanan/view/revisiBarangView.java</file>
-=======
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/view/TransaksiView.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/util/FormatRupiah.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/util/FormatTanggal.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/view/BerandaView.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/controller/DetailTransaksiController.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/model/Barang.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/view/BarangView.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/controller/TransaksiController.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/model/Transaksi.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/controller/BarangController.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/model/DetailTransaksi.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/model/KeranjangBelanja.java</file>
-            <file>file:/C:/Users/Riett/NetbeansProjects/PenjualanMakanan/src/com/penjualanmakanan/util/Koneksi.java</file>
->>>>>>> 3bca736ede88feab31e63b7be10ba06bf74351ad
+            <file>file:/C:/Users/User/NetBeansProject/PenjualanMakanan/src/com/penjualanmakanan/view/revisiTransaksiView.java</file>
         </group>
     </open-files>
 </project-private>
