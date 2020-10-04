@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class Koneksi {
     // JDBC driver name and database URL
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    private final String DB_URL = "jdbc:mysql://localhost/penjualan_makanan";
+    private final String DB_URL = "jdbc:mysql://localhost:3306/penjualan_makanan";
 
     //  Database credentials
     private final String USER = "root";
