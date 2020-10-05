@@ -414,15 +414,14 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         for(int i = 0; i < tempCustomBarang.size(); i++) {
             if(tempCustomBarang.get(i).getId() == customBarang.getId()) {
                 indexOfTargetCustomBarang = i;
+                tempCustomBarang.get(i).setStok(customBarang.getStok());
                 break;
             }
         }
         
-        if(indexOfTargetCustomBarang != -1) {
-            tempCustomBarang.remove(indexOfTargetCustomBarang);
+        if(indexOfTargetCustomBarang == -1) {
+            tempCustomBarang.add(customBarang);
         }
-        
-        tempCustomBarang.add(customBarang);
         
         tampilBarang(tempCustomBarang);
     }//GEN-LAST:event_Button_TambahActionPerformed
