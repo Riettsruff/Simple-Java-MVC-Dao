@@ -16,6 +16,7 @@ import com.penjualanmakanan.model.KeranjangBelanja;
 import com.penjualanmakanan.model.Transaksi;
 import com.penjualanmakanan.util.FormatRupiah;
 import com.penjualanmakanan.util.FormatTanggal;
+import java.lang.reflect.Array;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -26,6 +27,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     List<Transaksi> listTransaksi = new ArrayList<>();
     List<Barang> listBarang = new ArrayList<>();
     List<KeranjangBelanja> listBarangBelanjaan = new ArrayList<>();
+    List<Barang> tempCustomBarang = new ArrayList<>();
     
     BarangController barangController = new BarangController();
     TransaksiController transaksiController = new TransaksiController();
@@ -59,7 +61,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         Daftar_Barang_Belanjaan.setText("");
     }
     
-    public void tampilBarang() {
+    public void tampilBarang(List<Barang> customBarang) {
         listBarang = new BarangController().getAllBarang();
         
         Object[][] obj = new Object[listBarang.size()][5];
@@ -70,6 +72,16 @@ public class revisiTransaksiView extends javax.swing.JFrame {
             obj[i][2] = listBarang.get(i).getNama();
             obj[i][3] = listBarang.get(i).getStok();
             obj[i][4] = formatRupiah.kurensi(listBarang.get(i).getHarga());
+            
+            for (int j = 0; j < customBarang.size(); j++) {
+                if(listBarang.get(i).getId().equals(customBarang.get(j).getId())) {
+                    obj[i][2] = customBarang.get(j).getNama();
+                    obj[i][3] = customBarang.get(j).getStok();
+                    obj[i][4] = formatRupiah.kurensi(customBarang.get(j).getHarga());
+                    
+                    break;
+                }
+            }
         }
 
         tabelBarang.setModel(
@@ -93,7 +105,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     public revisiTransaksiView() {
         initComponents();
         initFormValue();
-        tampilBarang();
+        tampilBarang(tempCustomBarang);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +120,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jInternalFrame5 = new javax.swing.JInternalFrame();
         jLabel9 = new javax.swing.JLabel();
-        Pilihan_Barang = new javax.swing.JComboBox<Object>();
+        Pilihan_Barang = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         Jumlah_Barang = new javax.swing.JTextField();
         Button_Tambah = new javax.swing.JButton();
@@ -198,26 +210,25 @@ public class revisiTransaksiView extends javax.swing.JFrame {
             jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jInternalFrame5Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addGap(18, 18, 18)
-                            .addComponent(Pilihan_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jInternalFrame5Layout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(Jumlah_Barang))
-                        .addComponent(Button_Tambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Button_Simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jInternalFrame5Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(Pilihan_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jInternalFrame5Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Jumlah_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Button_Tambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Button_Simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Button_Back4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jInternalFrame5Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Id_Transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(Id_Transaksi)))
+                .addGap(26, 26, 26)
                 .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -340,6 +351,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         Barang barangTerpilih = (Barang) Pilihan_Barang.getSelectedItem();
         KeranjangBelanja barangTerbeli = new KeranjangBelanja();
         
+        int indexOfBarangTerpilih = Pilihan_Barang.getSelectedIndex() - 1;
         int jumlahBarangTerbeli = jumlahBarang;
         int stokTersedia = barangController.getStokByIdBarang(barangTerpilih.getId());
         int indexOfTargetBarangBelanjaan = -1;
@@ -383,6 +395,27 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         }
         
         Daftar_Barang_Belanjaan.setText(daftarBarangBelanjaan);
+        
+        Barang customBarang = new Barang();
+        int indexOfTargetCustomBarang = -1;
+        
+        customBarang = barangTerpilih;
+        customBarang.setStok(stokTersedia - jumlahBarangTerbeli);
+        
+        for(int i = 0; i < tempCustomBarang.size(); i++) {
+            if(tempCustomBarang.get(i).getId() == customBarang.getId()) {
+                indexOfTargetCustomBarang = i;
+                break;
+            }
+        }
+        
+        if(indexOfTargetCustomBarang != -1) {
+            tempCustomBarang.remove(indexOfTargetCustomBarang);
+        }
+        
+        tempCustomBarang.add(customBarang);
+        
+        tampilBarang(tempCustomBarang);
     }//GEN-LAST:event_Button_TambahActionPerformed
 
     /**
