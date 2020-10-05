@@ -37,18 +37,20 @@ class ProcessBarang extends Thread {
         }
     }
 }
+
 /**
  *
  * @author User
  */
 public class revisiBarangView extends javax.swing.JFrame {
+
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
 
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
-        
+
         Object[][] obj = new Object[listBarang.size()][5];
 
         for (int i = 0; i < listBarang.size(); i++) {
@@ -76,37 +78,52 @@ public class revisiBarangView extends javax.swing.JFrame {
         }
         );
     }
-    
-    public void insertBarang(){
-        Barang barang = new Barang();
-        barang.setId(inputId.getText());
-        barang.setNama(inputNama.getText());
-        barang.setStok(Integer.parseInt(inputStok.getText()));
-        barang.setHarga(Integer.parseInt(inputHarga.getText()));
-        
-        boolean insertBarang = barangController.insertBarang(barang);
-        
-        if(insertBarang) {
-            JOptionPane.showMessageDialog(this, "Penambahan barang berhasil");
-            initData();
+
+    public void insertBarang() {
+
+        if (inputNama.getText().equals("") && inputStok.getText().equals("")
+                && inputHarga.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (inputNama.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nama barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (inputStok.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Stok barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (inputHarga.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
         } else {
-            JOptionPane.showMessageDialog(this, "Penambahan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            Barang barang = new Barang();
+            barang.setId(inputId.getText());
+            barang.setNama(inputNama.getText());
+            barang.setStok(Integer.parseInt(inputStok.getText()));
+            barang.setHarga(Integer.parseInt(inputHarga.getText()));
+
+            boolean insertBarang = barangController.insertBarang(barang);
+            if (insertBarang) {
+                JOptionPane.showMessageDialog(this, "Penambahan barang berhasil");
+                initData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Penambahan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }
-    
+
     public void initData() {
         inputId.setText("BRG" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
-        
+
         inputNama.setText("");
-        
+
         inputStok.setText("");
-        
+
         inputHarga.setText("");
-        
+
         tampilBarang();
     }
-    
+
     public revisiBarangView() {
         initComponents();
         initData();
@@ -172,6 +189,12 @@ public class revisiBarangView extends javax.swing.JFrame {
         inputId.setEditable(false);
         inputId.setBackground(new java.awt.Color(230, 230, 230));
         inputId.setEnabled(false);
+
+        inputStok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputStokActionPerformed(evt);
+            }
+        });
 
         Button_Add.setText("Add");
         Button_Add.addActionListener(new java.awt.event.ActionListener() {
@@ -325,10 +348,10 @@ public class revisiBarangView extends javax.swing.JFrame {
         barang.setNama(inputNama.getText());
         barang.setStok(Integer.parseInt(inputStok.getText()));
         barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
-        
+
         boolean updateBarang = barangController.updateBarang(barang);
-        
-        if(updateBarang) {
+
+        if (updateBarang) {
             JOptionPane.showMessageDialog(this, "Update barang berhasil");
             initData();
         } else {
@@ -340,7 +363,7 @@ public class revisiBarangView extends javax.swing.JFrame {
         Barang barang = new Barang();
         barang.setId(inputId.getText());
         boolean deleteBarang = barangController.deleteBarang(barang);
-        if(deleteBarang) {
+        if (deleteBarang) {
             JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
             initData();
         } else {
@@ -369,6 +392,10 @@ public class revisiBarangView extends javax.swing.JFrame {
         inputStok.setText(stok.toString());
         inputHarga.setText(harga.toString());
     }//GEN-LAST:event_tabelBarangMouseClicked
+
+    private void inputStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputStokActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputStokActionPerformed
 
     /**
      * @param args the command line arguments

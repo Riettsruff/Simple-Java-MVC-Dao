@@ -194,6 +194,9 @@
         <Component class="javax.swing.JTextField" name="inputNama">
         </Component>
         <Component class="javax.swing.JTextField" name="inputStok">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputStokActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="inputHarga">
         </Component>
