@@ -81,6 +81,8 @@ public class revisiBarangView extends javax.swing.JFrame {
         );
     }
 
+    
+    
     public void insertBarang() {
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
@@ -101,17 +103,13 @@ public class revisiBarangView extends javax.swing.JFrame {
         } else {
             try {
                 Integer.parseInt(inputStok.getText());
+                Integer.parseInt(inputHarga.getText());
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
-            try {
-                Integer.parseInt(inputHarga.getText());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            
             
             Barang barang = new Barang();
             barang.setId(inputId.getText());

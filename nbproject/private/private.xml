@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/view/revisiBerandaView.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/util/Koneksi.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/view/revisiBarangView.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/view/BarangView.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/view/TransaksiView.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/controller/BarangController.java</file>
-            <file>file:/C:/Users/Boona/Downloads/Compressed/Tugas_Kapita-master/src/com/penjualanmakanan/model/Barang.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/view/revisiHistoryTransaksiView.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/util/ValidasiUpdateNamaBarang.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/controller/BarangController.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/view/revisiBerandaView.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/controller/DetailTransaksiController.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/view/revisiBarangView.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/view/revisiTransaksiView.java</file>
+            <file>file:/F:/MATERI%20KULIAH/Kapita%20Selekta%20Metrodata/Coba/TugasFix4/Tugas_Kapita/src/com/penjualanmakanan/controller/TransaksiController.java</file>
         </group>
     </open-files>
 </project-private>
