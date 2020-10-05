@@ -48,7 +48,8 @@ public class revisiBarangView extends javax.swing.JFrame {
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
-
+    ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
+    
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
 
@@ -94,6 +95,9 @@ public class revisiBarangView extends javax.swing.JFrame {
             return;
         } else if (inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (validasiupdatenamabarang.cekNamaBarang(inputNama.getText())) {
+            JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             Barang barang = new Barang();
@@ -344,7 +348,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
+        
 
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
