@@ -99,6 +99,20 @@ public class revisiBarangView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
+            try {
+                Integer.parseInt(inputStok.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            try {
+                Integer.parseInt(inputHarga.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             Barang barang = new Barang();
             barang.setId(inputId.getText());
             barang.setNama(inputNama.getText());
@@ -365,6 +379,20 @@ public class revisiBarangView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
+            try {
+                Integer.parseInt(inputStok.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            try {
+                Integer.parseInt(inputHarga.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             Barang barang = new Barang();
             barang.setId(inputId.getText());
             barang.setNama(inputNama.getText());

@@ -341,7 +341,14 @@ public class revisiTransaksiView extends javax.swing.JFrame {
             return;
         } 
         
-        int jumlahBarang = Integer.parseInt(Jumlah_Barang.getText());
+        int jumlahBarang;
+        
+        try {
+            jumlahBarang = Integer.parseInt(Jumlah_Barang.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Jumlah barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         if(jumlahBarang == 0) {
             JOptionPane.showMessageDialog(this, "Jumlah barang minimal 1", "Oops!", JOptionPane.ERROR_MESSAGE);
