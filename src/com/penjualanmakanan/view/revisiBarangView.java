@@ -187,6 +187,7 @@ public class revisiBarangView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Barang");
 
         jInternalFrame1.setVisible(true);
 
