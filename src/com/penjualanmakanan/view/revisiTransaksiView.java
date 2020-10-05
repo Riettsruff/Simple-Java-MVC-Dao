@@ -321,6 +321,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
                 
                 JOptionPane.showMessageDialog(this, "Transaksi berhasil");
                 initFormValue();
+                tempCustomBarang.clear();
             } else {
                 JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
                 return;
