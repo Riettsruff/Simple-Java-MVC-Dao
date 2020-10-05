@@ -5,18 +5,93 @@
  */
 package com.penjualanmakanan.view;
 
-/**
- *
- * @author User
- */
+import com.penjualanmakanan.controller.BarangController;
+import com.penjualanmakanan.controller.DetailTransaksiController;
+import java.util.ArrayList;
+import java.util.List;
+import com.penjualanmakanan.controller.TransaksiController;
+import com.penjualanmakanan.model.Barang;
+import com.penjualanmakanan.model.KeranjangBelanja;
+import com.penjualanmakanan.model.Transaksi;
+import com.penjualanmakanan.util.FormatRupiah;
+import com.penjualanmakanan.util.FormatTanggal;
+import java.util.Date;
+
+
 
 
 public class revisiTransaksiView extends javax.swing.JFrame {
+    List<Transaksi> listTransaksi = new ArrayList<>();
+    List<Barang> listBarang = new ArrayList<>();
+    List<KeranjangBelanja> listBarangBelanjaan = new ArrayList<>();
+    
+    BarangController barangController = new BarangController();
+    TransaksiController transaksiController = new TransaksiController();
+    DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
+    
+    FormatRupiah formatRupiah = new FormatRupiah();
     /**
      * Creates new form revisiTransaksiView
      */
+    
+        public void initFormValue() {
+        if(Pilihan_Barang.getItemCount() == 0) {
+            Pilihan_Barang.addItem("-Pilih Barang-");
+            listBarang = barangController.getAllBarang();
+
+            for (int i = 0; i < listBarang.size();i++){
+                Pilihan_Barang.addItem(listBarang.get(i));
+            }
+        }
+        
+        Pilihan_Barang.setSelectedIndex(0);
+//        
+        Id_Transaksi.setText("TRX" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
+//        
+//        Tanggal_Transaksi.setText(new FormatTanggal(new Date(), "dd-MM-yyyy").toString());
+//        
+//        Jumlah_Barang.setText("");
+//        
+//        listBarangBelanjaan.clear();
+//        
+//        Daftar_Barang_Belanjaan.setText("");
+    }
+    
+    public void tampilBarang() {
+        listBarang = new BarangController().getAllBarang();
+        
+        Object[][] obj = new Object[listBarang.size()][5];
+
+        for (int i = 0; i < listBarang.size(); i++) {
+            obj[i][0] = (i + 1) + ".";
+            obj[i][1] = listBarang.get(i).getId();
+            obj[i][2] = listBarang.get(i).getNama();
+            obj[i][3] = listBarang.get(i).getStok();
+            obj[i][4] = formatRupiah.kurensi(listBarang.get(i).getHarga());
+        }
+
+        tabelBarang.setModel(
+                new javax.swing.table.DefaultTableModel(
+                        obj,
+                        new String[]{
+                            "No.", "ID Barang", "Nama Barang", "Stok Barang", "Harga Barang"
+                        }
+                ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        }
+        );
+    }
+    
     public revisiTransaksiView() {
         initComponents();
+        initFormValue();
+        tampilBarang();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,14 +106,16 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jInternalFrame5 = new javax.swing.JInternalFrame();
         jLabel9 = new javax.swing.JLabel();
-        Combo_Barang4 = new javax.swing.JComboBox<String>();
+        Pilihan_Barang = new javax.swing.JComboBox<Object>();
         jLabel10 = new javax.swing.JLabel();
         txtJumlah4 = new javax.swing.JTextField();
         Button_Add4 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        Tabel_Transaksi = new javax.swing.JTable();
+        tabelBarang = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         Button_Back4 = new javax.swing.JButton();
+        Id_Transaksi = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         Button_Checkout.setText("Checkout");
         Button_Checkout.addActionListener(new java.awt.event.ActionListener() {
@@ -55,34 +132,37 @@ public class revisiTransaksiView extends javax.swing.JFrame {
 
         jLabel9.setText("Nama");
 
-        Combo_Barang4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel10.setText("Jumlah");
 
         Button_Add4.setText("Add");
+        Button_Add4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_Add4ActionPerformed(evt);
+            }
+        });
 
-        Tabel_Transaksi.setModel(new javax.swing.table.DefaultTableModel(
+        tabelBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nama", "Jumlah", "Harga"
+                "No", "Id", "Nama", "Stok", "Harga"
             }
         ));
-        jScrollPane5.setViewportView(Tabel_Transaksi);
+        jScrollPane5.setViewportView(tabelBarang);
 
         jButton6.setText("Checkout");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +178,8 @@ public class revisiTransaksiView extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Id");
+
         javax.swing.GroupLayout jInternalFrame5Layout = new javax.swing.GroupLayout(jInternalFrame5.getContentPane());
         jInternalFrame5.getContentPane().setLayout(jInternalFrame5Layout);
         jInternalFrame5Layout.setHorizontalGroup(
@@ -109,14 +191,18 @@ public class revisiTransaksiView extends javax.swing.JFrame {
                         .addGroup(jInternalFrame5Layout.createSequentialGroup()
                             .addComponent(jLabel9)
                             .addGap(18, 18, 18)
-                            .addComponent(Combo_Barang4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Pilihan_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jInternalFrame5Layout.createSequentialGroup()
                             .addComponent(jLabel10)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtJumlah4))
                         .addComponent(Button_Add4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(Button_Back4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Button_Back4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jInternalFrame5Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Id_Transaksi)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
                 .addContainerGap())
@@ -129,8 +215,12 @@ public class revisiTransaksiView extends javax.swing.JFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jInternalFrame5Layout.createSequentialGroup()
                         .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(Id_Transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(Combo_Barang4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Pilihan_Barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
@@ -139,10 +229,13 @@ public class revisiTransaksiView extends javax.swing.JFrame {
                         .addComponent(Button_Add4)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                        .addGap(43, 43, 43)
                         .addComponent(Button_Back4)))
                 .addContainerGap())
         );
+
+        Pilihan_Barang.getAccessibleContext().setAccessibleDescription("");
+        Pilihan_Barang.getAccessibleContext().setAccessibleParent(this);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,6 +270,10 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void Button_Add4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Add4ActionPerformed
+        
+    }//GEN-LAST:event_Button_Add4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,14 +314,16 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     private javax.swing.JButton Button_Add4;
     private javax.swing.JButton Button_Back4;
     private javax.swing.JButton Button_Checkout;
-    private javax.swing.JComboBox<String> Combo_Barang4;
-    private javax.swing.JTable Tabel_Transaksi;
+    private javax.swing.JTextField Id_Transaksi;
+    private javax.swing.JComboBox<Object> Pilihan_Barang;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JInternalFrame jInternalFrame5;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable tabelBarang;
     private javax.swing.JTextField txtJumlah4;
     // End of variables declaration//GEN-END:variables
 }

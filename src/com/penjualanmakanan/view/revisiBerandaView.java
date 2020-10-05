@@ -139,7 +139,9 @@ public class revisiBerandaView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_BarangActionPerformed
 
     private void Button_RiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RiwayatActionPerformed
-        // TODO add your handling code here:
+        revisiHistoryTransaksiView historyView = new revisiHistoryTransaksiView();
+        historyView.setVisible(true);
+        dispose();
     }//GEN-LAST:event_Button_RiwayatActionPerformed
 
     private void Button_KeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_KeluarActionPerformed

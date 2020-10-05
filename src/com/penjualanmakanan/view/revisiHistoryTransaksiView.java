@@ -5,17 +5,68 @@
  */
 package com.penjualanmakanan.view;
 
+import com.penjualanmakanan.controller.BarangController;
+import com.penjualanmakanan.controller.DetailTransaksiController;
+import com.penjualanmakanan.controller.TransaksiController;
+import com.penjualanmakanan.model.Barang;
+import com.penjualanmakanan.model.KeranjangBelanja;
+import com.penjualanmakanan.model.Transaksi;
+import com.penjualanmakanan.util.FormatRupiah;
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  *
  * @author User
  */
 public class revisiHistoryTransaksiView extends javax.swing.JFrame {
+    List<Transaksi> listTransaksi = new ArrayList<>();
+    List<Barang> listBarang = new ArrayList<>();
 
+    
+    TransaksiController transaksiController = new TransaksiController();
+    DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
+    
+    FormatRupiah formatRupiah = new FormatRupiah();
     /**
      * Creates new form revisiHistoryTransaksiView
      */
+    public void bindingTabelTransaksi() {
+        listTransaksi = new TransaksiController().getAllTransaksi();
+        
+        Object [][] obj = new Object[listTransaksi.size()][5];
+        
+        for (int i = 0; i < listTransaksi.size();i++){
+            obj[i][0] = (i+1) + ".";
+            obj[i][1] = listTransaksi.get(i).getId();
+            obj[i][2] = listTransaksi.get(i).getTglTransaksi();
+            obj[i][3] = String.valueOf(transaksiController.getTotalBarangByIdTransaksi(listTransaksi.get(i).getId()));
+            obj[i][4] = formatRupiah.kurensi(transaksiController.getTotalHargaByIdTransaksi(listTransaksi.get(i).getId()));
+        }
+        
+        Tabel_Transaksi.setModel(
+            new javax.swing.table.DefaultTableModel(
+                obj,
+                new String [] {
+                    "No.","ID Transaksi", "Tanggal Transaksi", "Total Barang", "Total Harga"
+                }
+            )
+            {
+                boolean[] canEdit = new boolean[]{
+                    false, false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            }
+        );
+    }
+    
     public revisiHistoryTransaksiView() {
         initComponents();
+        bindingTabelTransaksi();
     }
 
     /**
@@ -30,7 +81,7 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jInternalFrame2 = new javax.swing.JInternalFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tabel_Riwayat = new javax.swing.JTable();
+        Tabel_Transaksi = new javax.swing.JTable();
         Button_Back = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
@@ -50,7 +101,7 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
 
         jInternalFrame2.setVisible(true);
 
-        Tabel_Riwayat.setModel(new javax.swing.table.DefaultTableModel(
+        Tabel_Transaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -71,7 +122,7 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
                 "Id", "Tanggal", "Waktu", "Total"
             }
         ));
-        jScrollPane1.setViewportView(Tabel_Riwayat);
+        jScrollPane1.setViewportView(Tabel_Transaksi);
 
         Button_Back.setText("Back");
         Button_Back.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +175,9 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_BackButton_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackButton_BackActionPerformed
-        // TODO add your handling code here:
+        revisiBerandaView berandaView = new revisiBerandaView();
+        berandaView.setVisible(true);
+        dispose();
     }//GEN-LAST:event_Button_BackButton_BackActionPerformed
 
     /**
@@ -164,7 +217,7 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Back;
-    private javax.swing.JTable Tabel_Riwayat;
+    private javax.swing.JTable Tabel_Transaksi;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
     private javax.swing.JScrollPane jScrollPane1;
