@@ -34,6 +34,7 @@ public class revisiBerandaView extends javax.swing.JFrame {
         Button_Keluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Beranda");
 
         jInternalFrame1.setVisible(true);
 
