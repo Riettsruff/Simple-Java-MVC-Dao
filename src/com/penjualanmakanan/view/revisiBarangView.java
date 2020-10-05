@@ -5,17 +5,110 @@
  */
 package com.penjualanmakanan.view;
 
+import com.penjualanmakanan.controller.BarangController;
+import java.util.ArrayList;
+import java.util.List;
+import com.penjualanmakanan.model.Barang;
+import com.penjualanmakanan.util.FormatRupiah;
+import com.penjualanmakanan.util.FormatTanggal;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+class ProcessBarang extends Thread {
+
+    revisiBarangView barangView;
+
+    public ProcessBarang(revisiBarangView v) {
+        this.barangView = v;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            barangView.tampilBarang();
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}
 /**
  *
  * @author User
  */
 public class revisiBarangView extends javax.swing.JFrame {
+    List<Barang> listBarang = new ArrayList<>();
+    BarangController barangController = new BarangController();
+    FormatRupiah formatRupiah = new FormatRupiah();
 
-    /**
-     * Creates new form revisiBarangView
-     */
+    public void tampilBarang() {
+        listBarang = new BarangController().getAllBarang();
+        
+        Object[][] obj = new Object[listBarang.size()][5];
+
+        for (int i = 0; i < listBarang.size(); i++) {
+            obj[i][0] = (i + 1) + ".";
+            obj[i][1] = listBarang.get(i).getId();
+            obj[i][2] = listBarang.get(i).getNama();
+            obj[i][3] = listBarang.get(i).getStok();
+            obj[i][4] = formatRupiah.kurensi(listBarang.get(i).getHarga());
+        }
+
+        tabelBarang.setModel(
+                new javax.swing.table.DefaultTableModel(
+                        obj,
+                        new String[]{
+                            "No.", "ID Barang", "Nama Barang", "Stok Barang", "Harga Barang"
+                        }
+                ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        }
+        );
+    }
+    
+    public void insertBarang(){
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        barang.setNama(inputNama.getText());
+        barang.setStok(Integer.parseInt(inputStok.getText()));
+        barang.setHarga(Integer.parseInt(inputHarga.getText()));
+        
+        boolean insertBarang = barangController.insertBarang(barang);
+        
+        if(insertBarang) {
+            JOptionPane.showMessageDialog(this, "Penambahan barang berhasil");
+            initData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Penambahan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void initData() {
+        inputId.setText("BRG" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
+        
+        inputNama.setText("");
+        
+        inputStok.setText("");
+        
+        inputHarga.setText("");
+        
+        tampilBarang();
+    }
+    
     public revisiBarangView() {
         initComponents();
+        initData();
     }
 
     /**
@@ -37,15 +130,15 @@ public class revisiBarangView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txt_Id = new javax.swing.JTextField();
-        txt_Nama = new javax.swing.JTextField();
-        txt_Stok = new javax.swing.JTextField();
-        txt_Harga = new javax.swing.JTextField();
+        inputId = new javax.swing.JTextField();
+        inputNama = new javax.swing.JTextField();
+        inputStok = new javax.swing.JTextField();
+        inputHarga = new javax.swing.JTextField();
         Button_Add = new javax.swing.JButton();
         Button_Update = new javax.swing.JButton();
         Button_Delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tabel_Barang = new javax.swing.JTable();
+        tabelBarang = new javax.swing.JTable();
         Button_Back = new javax.swing.JButton();
 
         jLabel1.setText("Input");
@@ -75,6 +168,10 @@ public class revisiBarangView extends javax.swing.JFrame {
 
         jLabel5.setText("Harga");
 
+        inputId.setEditable(false);
+        inputId.setBackground(new java.awt.Color(230, 230, 230));
+        inputId.setEnabled(false);
+
         Button_Add.setText("Add");
         Button_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +193,7 @@ public class revisiBarangView extends javax.swing.JFrame {
             }
         });
 
-        Tabel_Barang.setModel(new javax.swing.table.DefaultTableModel(
+        tabelBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -117,7 +214,12 @@ public class revisiBarangView extends javax.swing.JFrame {
                 "Id", "Nama", "Stok", "Harga"
             }
         ));
-        jScrollPane1.setViewportView(Tabel_Barang);
+        tabelBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelBarangMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelBarang);
 
         Button_Back.setText("Back");
         Button_Back.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +239,7 @@ public class revisiBarangView extends javax.swing.JFrame {
                         .addGroup(jInternalFrame1Layout.createSequentialGroup()
                             .addComponent(jLabel5)
                             .addGap(18, 18, 18)
-                            .addComponent(txt_Harga))
+                            .addComponent(inputHarga))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jInternalFrame1Layout.createSequentialGroup()
                             .addComponent(Button_Add, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,9 +253,9 @@ public class revisiBarangView extends javax.swing.JFrame {
                                 .addComponent(jLabel4))
                             .addGap(20, 20, 20)
                             .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_Nama)
-                                .addComponent(txt_Stok)
-                                .addComponent(txt_Id))))
+                                .addComponent(inputNama)
+                                .addComponent(inputStok)
+                                .addComponent(inputId))))
                     .addComponent(Button_Refresh)
                     .addComponent(Button_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -169,20 +271,20 @@ public class revisiBarangView extends javax.swing.JFrame {
                         .addComponent(Button_Refresh)
                         .addGap(26, 26, 26)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txt_Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txt_Stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txt_Harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(inputHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Button_Add)
@@ -215,24 +317,59 @@ public class revisiBarangView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RefreshActionPerformed
-        // TODO add your handling code here:
+        initData();
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        // TODO add your handling code here:
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        barang.setNama(inputNama.getText());
+        barang.setStok(Integer.parseInt(inputStok.getText()));
+        barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
+        
+        boolean updateBarang = barangController.updateBarang(barang);
+        
+        if(updateBarang) {
+            JOptionPane.showMessageDialog(this, "Update barang berhasil");
+            initData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Update barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_Button_UpdateActionPerformed
 
     private void Button_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_DeleteActionPerformed
-        // TODO add your handling code here:
+        Barang barang = new Barang();
+        barang.setId(inputId.getText());
+        boolean deleteBarang = barangController.deleteBarang(barang);
+        if(deleteBarang) {
+            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
+            initData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_Button_DeleteActionPerformed
 
     private void Button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AddActionPerformed
-        // TODO add your handling code here:
+        insertBarang();
     }//GEN-LAST:event_Button_AddActionPerformed
 
     private void Button_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackActionPerformed
-        // TODO add your handling code here:
+        revisiBerandaView berandaView = new revisiBerandaView();
+        berandaView.setVisible(true);
+        dispose();
     }//GEN-LAST:event_Button_BackActionPerformed
+
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        int baris = tabelBarang.getSelectedRow();
+        Object id = tabelBarang.getValueAt(baris, 1);
+        Object nama = tabelBarang.getValueAt(baris, 2);
+        Object stok = tabelBarang.getValueAt(baris, 3);
+        Object harga = tabelBarang.getValueAt(baris, 4);
+        inputId.setText(id.toString());
+        inputNama.setText(nama.toString());
+        inputStok.setText(stok.toString());
+        inputHarga.setText(harga.toString());
+    }//GEN-LAST:event_tabelBarangMouseClicked
 
     /**
      * @param args the command line arguments
@@ -275,7 +412,10 @@ public class revisiBarangView extends javax.swing.JFrame {
     private javax.swing.JButton Button_Delete;
     private javax.swing.JButton Button_Refresh;
     private javax.swing.JButton Button_Update;
-    private javax.swing.JTable Tabel_Barang;
+    private javax.swing.JTextField inputHarga;
+    private javax.swing.JTextField inputId;
+    private javax.swing.JTextField inputNama;
+    private javax.swing.JTextField inputStok;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -286,9 +426,6 @@ public class revisiBarangView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txt_Harga;
-    private javax.swing.JTextField txt_Id;
-    private javax.swing.JTextField txt_Nama;
-    private javax.swing.JTextField txt_Stok;
+    private javax.swing.JTable tabelBarang;
     // End of variables declaration//GEN-END:variables
 }

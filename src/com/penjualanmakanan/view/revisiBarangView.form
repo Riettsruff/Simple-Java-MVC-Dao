@@ -81,7 +81,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txt_Harga" max="32767" attributes="0"/>
+                              <Component id="inputHarga" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="Button_Add" min="-2" pref="67" max="-2" attributes="0"/>
@@ -98,9 +98,9 @@
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_Nama" max="32767" attributes="0"/>
-                                  <Component id="txt_Stok" max="32767" attributes="0"/>
-                                  <Component id="txt_Id" max="32767" attributes="0"/>
+                                  <Component id="inputNama" max="32767" attributes="0"/>
+                                  <Component id="inputStok" max="32767" attributes="0"/>
+                                  <Component id="inputId" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -122,23 +122,23 @@
                           <Component id="Button_Refresh" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_Id" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputId" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_Nama" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputNama" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_Stok" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputStok" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_Harga" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="inputHarga" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -185,13 +185,20 @@
             <Property name="text" type="java.lang.String" value="Harga"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Id">
+        <Component class="javax.swing.JTextField" name="inputId">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e6" green="e6" red="e6" type="rgb"/>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Nama">
+        <Component class="javax.swing.JTextField" name="inputNama">
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Stok">
+        <Component class="javax.swing.JTextField" name="inputStok">
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Harga">
+        <Component class="javax.swing.JTextField" name="inputHarga">
         </Component>
         <Component class="javax.swing.JButton" name="Button_Add">
           <Properties>
@@ -224,7 +231,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="Tabel_Barang">
+            <Component class="javax.swing.JTable" name="tabelBarang">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="14">
@@ -262,6 +269,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelBarangMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

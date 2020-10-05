@@ -105,6 +105,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Barang"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_BarangActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="Button_Transaksi">
           <Properties>
@@ -118,11 +121,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Riwayat"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_RiwayatActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="Button_Keluar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Keluar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_KeluarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

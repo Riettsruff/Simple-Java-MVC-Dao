@@ -5,15 +5,14 @@
  */
 package com.penjualanmakanan.view;
 
+
 /**
  *
  * @author User
  */
 public class revisiBerandaView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form revisiBerandaView
-     */
+    
+    
     public revisiBerandaView() {
         initComponents();
     }
@@ -42,6 +41,11 @@ public class revisiBerandaView extends javax.swing.JFrame {
         jLabel2.setText("Penjualan Barang");
 
         Button_Barang.setText("Barang");
+        Button_Barang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_BarangActionPerformed(evt);
+            }
+        });
 
         Button_Transaksi.setText("Transaksi");
         Button_Transaksi.addActionListener(new java.awt.event.ActionListener() {
@@ -51,8 +55,18 @@ public class revisiBerandaView extends javax.swing.JFrame {
         });
 
         Button_Riwayat.setText("Riwayat");
+        Button_Riwayat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_RiwayatActionPerformed(evt);
+            }
+        });
 
         Button_Keluar.setText("Keluar");
+        Button_Keluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_KeluarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -113,8 +127,24 @@ public class revisiBerandaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_TransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TransaksiActionPerformed
-        // TODO add your handling code here:
+        revisiTransaksiView transaksiView = new revisiTransaksiView();
+        transaksiView.setVisible(true);
+        dispose();
     }//GEN-LAST:event_Button_TransaksiActionPerformed
+
+    private void Button_BarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BarangActionPerformed
+        revisiBarangView barangView = new revisiBarangView();
+        barangView.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_Button_BarangActionPerformed
+
+    private void Button_RiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RiwayatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Button_RiwayatActionPerformed
+
+    private void Button_KeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_KeluarActionPerformed
+        dispose();
+    }//GEN-LAST:event_Button_KeluarActionPerformed
 
     /**
      * @param args the command line arguments

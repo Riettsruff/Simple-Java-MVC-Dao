@@ -15,29 +15,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
-class ProcessBarang extends Thread {
 
-    BarangView barangView;
-
-    public ProcessBarang(BarangView v) {
-        this.barangView = v;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            barangView.tampilBarang();
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-}
 
 /**
  *
@@ -218,11 +197,6 @@ public class BarangView extends javax.swing.JFrame {
         inputId.setEditable(false);
         inputId.setBackground(new java.awt.Color(230, 230, 230));
         inputId.setEnabled(false);
-        inputId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputIdActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Nama : ");
 
@@ -336,10 +310,6 @@ public class BarangView extends javax.swing.JFrame {
     private void inputNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNamaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputNamaActionPerformed
-
-    private void inputIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputIdActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         Barang barang = new Barang();

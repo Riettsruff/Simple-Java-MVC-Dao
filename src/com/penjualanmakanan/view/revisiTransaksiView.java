@@ -9,15 +9,15 @@ package com.penjualanmakanan.view;
  *
  * @author User
  */
-public class revisiTransaksiView extends javax.swing.JFrame {
 
+
+public class revisiTransaksiView extends javax.swing.JFrame {
     /**
      * Creates new form revisiTransaksiView
      */
     public revisiTransaksiView() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +31,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jInternalFrame5 = new javax.swing.JInternalFrame();
         jLabel9 = new javax.swing.JLabel();
-        Combo_Barang4 = new javax.swing.JComboBox<>();
+        Combo_Barang4 = new javax.swing.JComboBox<String>();
         jLabel10 = new javax.swing.JLabel();
         txtJumlah4 = new javax.swing.JTextField();
         Button_Add4 = new javax.swing.JButton();
@@ -55,7 +55,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
 
         jLabel9.setText("Nama");
 
-        Combo_Barang4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_Barang4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel10.setText("Jumlah");
 
@@ -169,7 +169,9 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_CheckoutActionPerformed
 
     private void Button_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackActionPerformed
-        // TODO add your handling code here:
+        revisiBerandaView berandaView = new revisiBerandaView();
+        berandaView.setVisible(true);
+        dispose();
     }//GEN-LAST:event_Button_BackActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -212,57 +214,17 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Button_Add;
-    private javax.swing.JButton Button_Add1;
-    private javax.swing.JButton Button_Add2;
-    private javax.swing.JButton Button_Add3;
     private javax.swing.JButton Button_Add4;
-    private javax.swing.JButton Button_Back;
-    private javax.swing.JButton Button_Back1;
-    private javax.swing.JButton Button_Back2;
-    private javax.swing.JButton Button_Back3;
     private javax.swing.JButton Button_Back4;
     private javax.swing.JButton Button_Checkout;
-    private javax.swing.JComboBox<String> Combo_Barang;
-    private javax.swing.JComboBox<String> Combo_Barang1;
-    private javax.swing.JComboBox<String> Combo_Barang2;
-    private javax.swing.JComboBox<String> Combo_Barang3;
     private javax.swing.JComboBox<String> Combo_Barang4;
     private javax.swing.JTable Tabel_Transaksi;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JInternalFrame jInternalFrame1;
-    private javax.swing.JInternalFrame jInternalFrame2;
-    private javax.swing.JInternalFrame jInternalFrame3;
-    private javax.swing.JInternalFrame jInternalFrame4;
     private javax.swing.JInternalFrame jInternalFrame5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField txtJumlah;
-    private javax.swing.JTextField txtJumlah1;
-    private javax.swing.JTextField txtJumlah2;
-    private javax.swing.JTextField txtJumlah3;
     private javax.swing.JTextField txtJumlah4;
     // End of variables declaration//GEN-END:variables
 }
