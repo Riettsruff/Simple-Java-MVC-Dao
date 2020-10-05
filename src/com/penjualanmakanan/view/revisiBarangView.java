@@ -82,7 +82,6 @@ public class revisiBarangView extends javax.swing.JFrame {
     }
 
     public void insertBarang() {
-
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
@@ -118,7 +117,8 @@ public class revisiBarangView extends javax.swing.JFrame {
     }
 
     public void initData() {
-        inputId.setText("BRG" + new FormatTanggal(new Date(), "yyyyMMddHHmmssSS").toString());
+        int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
+        inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));
 
         inputNama.setText("");
 
@@ -348,8 +348,6 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        
-
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
