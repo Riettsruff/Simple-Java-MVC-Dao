@@ -10,11 +10,6 @@ import java.sql.SQLException;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class Koneksi {
-    
-    private static final String DB_URL = "jdbc:mysql://localhost/penjualan_makanan";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "";
-    
     private static Connection conn;
     
     public static Connection Koneksi() {
@@ -22,9 +17,11 @@ public class Koneksi {
             try {
                 MysqlDataSource dataSource = new MysqlDataSource();
 
-                dataSource.setUser(DB_USER);
-                dataSource.setPassword(DB_PASS);
-                dataSource.setUrl(DB_URL);
+                dataSource.setServerName("localhost");
+                dataSource.setPort(3306);
+                dataSource.setDatabaseName("penjualan_makanan");
+                dataSource.setUser("root");
+                dataSource.setPassword("");
                 
                 conn = dataSource.getConnection();
             } catch(SQLException se){
