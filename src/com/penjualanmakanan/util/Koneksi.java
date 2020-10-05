@@ -28,10 +28,8 @@ public class Koneksi {
                 
                 conn = dataSource.getConnection();
             } catch(SQLException se){
-                // Handle errors for JDBC
                 se.printStackTrace();
             } catch(Exception e){
-                //Handle errors for Class.forName
                 e.printStackTrace();
             }
         }
