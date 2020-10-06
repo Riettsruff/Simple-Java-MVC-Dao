@@ -21,7 +21,7 @@ public class Koneksi {
                 MysqlDataSource dataSource = new MysqlDataSource();
 
                 dataSource.setServerName("localhost");
-                dataSource.setPort(8111);
+                dataSource.setPort(3306);
                 dataSource.setDatabaseName("penjualan_makanan");
                 dataSource.setUser("root");
                 dataSource.setPassword("");
