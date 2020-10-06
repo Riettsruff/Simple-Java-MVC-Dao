@@ -99,20 +99,19 @@ public class revisiBarangView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
-            try {
-                Integer.parseInt(inputStok.getText());
-                Integer.parseInt(inputHarga.getText());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            Barang barang = new Barang();
-            barang.setId(inputId.getText());
-            barang.setNama(inputNama.getText());
-            barang.setStok(Integer.parseInt(inputStok.getText()));
-            
             if (pilihan.equalsIgnoreCase("insertBarang")) {
+                try {
+                    Integer.parseInt(inputStok.getText());
+                    Integer.parseInt(inputHarga.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                Barang barang = new Barang();
+                barang.setId(inputId.getText());
+                barang.setNama(inputNama.getText());
+                barang.setStok(Integer.parseInt(inputStok.getText()));
                 barang.setHarga(Integer.parseInt(inputHarga.getText()));
 
                 boolean insertBarang = barangController.insertBarang(barang);
@@ -124,6 +123,17 @@ public class revisiBarangView extends javax.swing.JFrame {
                 }
 
             } else if (pilihan.equalsIgnoreCase("updateBarang")) {
+                try {
+                    Integer.parseInt(inputStok.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                Barang barang = new Barang();
+                barang.setId(inputId.getText());
+                barang.setNama(inputNama.getText());
+                barang.setStok(Integer.parseInt(inputStok.getText()));
                 barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
 
                 boolean updateBarang = barangController.updateBarang(barang);
