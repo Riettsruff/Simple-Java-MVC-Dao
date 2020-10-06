@@ -39,7 +39,9 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
      * dan [5] karena ada 5 kolom
      */
     
-    
+    /**
+    * Method yang digunakan untuk mengikat (binding) tabel transaksi
+    */
     public void bindingTabelTransaksi() {
         listTransaksi = new TransaksiController().getAllTransaksi();
         

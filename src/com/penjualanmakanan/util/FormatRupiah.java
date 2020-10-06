@@ -13,6 +13,11 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class FormatRupiah {
+    /**
+    * Ini fungsi yang memformat uang menjadi kurensi rupiah.
+    * @param uang adalah value yang akan diformat 
+    * @return kurensiIndonesia.format(uang) yang merupakan fungsi dari library NumberFormat
+    */
     public String kurensi(long uang) {
         NumberFormat kurensiIndonesia = NumberFormat.getCurrencyInstance(new Locale("in","ID"));
         return kurensiIndonesia.format(uang);

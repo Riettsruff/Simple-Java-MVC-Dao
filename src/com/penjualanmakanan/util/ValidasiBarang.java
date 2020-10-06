@@ -29,12 +29,18 @@ public class ValidasiBarang extends ValidasiForm {
     
     private String hargaLabel;
     private String hargaValue;
-    
+    /**
+    * Ini method yang mengisi value dari target dan tipe aksi
+    * @param target
+    * @param actionType
+    */
     public ValidasiBarang(Object[][] target, String actionType) {
         this.target = target;
         this.actionType = actionType;
     }
-    
+    /**
+     * Untuk mengecek apakah Nama Barang sesuai ketentuan atau sah
+    */
     private boolean isNamaValid() {
         return 
             isRequiredValid(namaLabel, namaValue)
@@ -43,7 +49,9 @@ public class ValidasiBarang extends ValidasiForm {
                     : true
                 : false;
     }
-    
+    /**
+     * Untuk mengecek apakah Nama Barang yang dimaksud sudah ada atau belum
+    */
     private boolean isNamaAlreadySet() {
         boolean isSet = false;
         
@@ -55,21 +63,28 @@ public class ValidasiBarang extends ValidasiForm {
         
         return isSet;
     }
-    
+    /**
+     * Untuk mengecek apakah Stok Barang sesuai ketentuan atau sah
+    */
     private boolean isStokValid() {
         return 
             isRequiredValid(stokLabel, stokValue)
                 ? isNumberValid(stokLabel, stokValue)
                 : false;
     }
-    
+    /**
+     * Untuk mengecek apakah Harga Barang sesuai ketentuan atau sah
+    */
     private boolean isHargaValid() {
         return
             isRequiredValid(hargaLabel, hargaValue)
                 ? isNumberValid(hargaLabel, hargaValue)
                 : false;
     }
-    
+    /**
+     * Mengecek validitas dari keseluruhan value form barang
+     * @return true setelah selesai dicek
+     */
     public boolean isValid() {
         for(int i = 0; i < Array.getLength(target); i++) {
             switch((String) target[i][0]) {

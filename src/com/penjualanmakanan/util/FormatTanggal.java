@@ -20,7 +20,10 @@ public class FormatTanggal {
         this.tanggal = tanggal;
         this.format = format;
     }
-    
+    /**
+    * Ini fungsi yang menyusun tanggal sesuai format tertentu.
+    * @return simpleDateFormat.format(tanggal) yang merupakan fungsi dari library simpleDateFormat
+    */
     @Override
     public String toString() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
