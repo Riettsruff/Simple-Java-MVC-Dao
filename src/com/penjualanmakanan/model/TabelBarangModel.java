@@ -20,16 +20,31 @@ public class TabelBarangModel extends AbstractTableModel{
         this.list = list;
     }
     
+    /**
+     * Ini merupakan method untuk melihat jumlah barang yang ada di database
+     * @return list.size() ukuran array list barang 
+     */
     @Override
     public int getRowCount() {
         return list.size();
     }
 
+    /**
+     * Ini merupakan method untuk melihat jumlah kolom 
+     * @return 4 karena tabel hanya terdiri dari 4 kolom
+     */
     @Override
     public int getColumnCount() {
         return 4;
     }
 
+    /**
+     * Ini merupakan method untuk memunculkan isi tabel pada baris dan kolom tertentu
+     * @param rowIndex Ini parameter baris di tabel
+     * @param columnIndex Ini parameter kolom di tabel
+     * @return anggota array list pada baris dan kolom tertentu
+     */
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -40,6 +55,12 @@ public class TabelBarangModel extends AbstractTableModel{
             default: return null;
         }
     }
+    
+    /**
+     * Ini method untuk mengembalikan berupa string kolom apa yang dipilih
+     * @param column Ini parameter kolom yang terdiri dari Id, nama, stok, dan harga
+     * @return kolom yang dipilih berupa String
+     */
     
     @Override
     public String getColumnName(int column) {

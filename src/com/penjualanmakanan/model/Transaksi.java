@@ -14,18 +14,33 @@ public class Transaksi {
     private String id;
     private String tglTransaksi;
 
+    
+    /**
+     * Ini merupakan method untuk mendapatkan id  
+     * @return id bertipe String 
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Ini merupakan method untuk mengatur id barang
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Ini merupakan method untuk memperoleh tglTransaksi 
+     * @return tglTransaksi bertipe String 
+     */
     public String getTglTransaksi() {
         return tglTransaksi;
     }
 
+    /**
+     * Ini merupakan method untuk mengatur tglTransaksi 
+     */
     public void setTglTransaksi(String tglTransaksi) {
         this.tglTransaksi = tglTransaksi;
     }
