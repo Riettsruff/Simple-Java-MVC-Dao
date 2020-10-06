@@ -16,19 +16,30 @@ public class ValidasiForm {
     private String dialogTitle = "";
     private String dialogMessage = "";
     private boolean isValid = false;
-    
+    /**
+     * Untuk mengatur judul kota dialog
+     * @param dialogTitle merupakan inputan yang nantinya menjadi judul kotak dialog
+    */
     protected void setDialogTitle(String dialogTitle) {
         this.dialogTitle = dialogTitle;
     }
-    
+    /**
+     * Untuk mengambil judul kotak dialog
+     * @return dialogTitle yang merupakan judul itu sendiri
+    */
     protected String getDialogTitle() {
         return dialogTitle;
     }
-    
+    /**
+     * Untuk memasukkan value ke dalam dialogMessage 
+    */
     protected void setDialogMessage(String dialogMessage) {
         this.dialogMessage = dialogMessage;
     }
-    
+    /**
+     * Untuk mendapatkan value dialogMessage 
+     * @return dialogMessage yang merupakan isi pesan
+    */
     protected String getDialogMessage() {
         return dialogMessage;
     }

@@ -15,34 +15,68 @@ public class DetailTransaksi {
     private String idTransaksi;
     private String idBarang;
 
+    /**
+     * Ini method untuk mendapatkan id 
+     * @return id bertipe int
+     */
+    
     public int getId() {
         return id;
     }
 
+    /**
+     * Ini method untuk mengatur id detailTransaksi 
+     */
+    
     public void setId(int id) {
         this.id = id;
     }
-
+    
+    /**
+     * Ini method untuk mendapatkan jumlahBarang
+     * @return jmlBarang bertipe int
+     */
     public int getJmlBarang() {
         return jmlBarang;
     }
 
+    /**
+     * Ini method untuk mengatur jumlah Barang
+     */
+    
     public void setJmlBarang(int jmlBarang) {
         this.jmlBarang = jmlBarang;
     }
 
+    /**
+     * Ini method untuk mendapatkan idTransaksi
+     * @return idTransaksi bertipe String 
+     */
+    
     public String getIdTransaksi() {
         return idTransaksi;
     }
 
+    /**
+     * Ini method untuk mengatur idTransaksi
+     */
+    
     public void setIdTransaksi(String idTransaksi) {
         this.idTransaksi = idTransaksi;
     }
 
+    /**
+     * Ini method untuk mendapatkan idBarang
+     * @return idBarang bertipe String 
+     */
+    
     public String getIdBarang() {
         return idBarang;
     }
 
+    /**
+     * Ini method untuk mengatur idBarang
+     */
     public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
     }

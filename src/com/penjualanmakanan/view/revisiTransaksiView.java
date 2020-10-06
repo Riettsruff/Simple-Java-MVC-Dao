@@ -20,7 +20,10 @@ import com.penjualanmakanan.util.ValidasiTransaksi;
 import java.lang.reflect.Array;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
+/**
+* Creates new form revisiTransaksiView
+* @param 
+*/
 public class revisiTransaksiView extends javax.swing.JFrame {
     List<Transaksi> listTransaksi = new ArrayList<>();
     List<Barang> listBarang = new ArrayList<>();
@@ -38,10 +41,10 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         initData();
     }
 
-    /**
-     * Creates new form revisiTransaksiView
-     */
     
+    /**
+    * Method yang digunakan untuk menginisialisasi nilai form
+    */
     public void initFormValue() {
         if (Pilihan_Barang.getItemCount() == 0) {
             Pilihan_Barang.addItem("-Pilih Barang-");
@@ -64,7 +67,10 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         Daftar_Barang_Belanjaan.setText("");
     }
 
-    
+    /**
+    * Method yang digunakan untuk menampilkan barang
+    * @param customBarang untuk mendapatkan data daftar barang yang akan ditampilkan
+    */
     public void tampilBarang(List<Barang> customBarang) {
         listBarang = new BarangController().getAllBarang();
 
@@ -105,7 +111,10 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         }
         );
     }
-    
+    /**
+    * Method yang digunakan untuk validasi barang
+    * @param actionType yang berisi jenis aksi yang akan dilakukan
+    */
     public void submitTransaksi(String actionType) {
         Object[][] targetValidasi = new Object[2][3];
         

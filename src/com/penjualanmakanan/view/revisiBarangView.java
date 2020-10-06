@@ -74,13 +74,20 @@ public class revisiBarangView extends javax.swing.JFrame {
             };
 
             @Override
+            /**
+            * Mengecek apakah cell bisa di edit
+            * @return canEdit[columnIndex] yang merupakan indeks kolom yang ingin diedit
+            */
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         }
         );
     }
-    
+    /**
+    * Method yang digunakan untuk validasi barang
+    * @param actionType yang berisi jenis aksi yang akan dilakukan
+    */
     public void submitBarang(String actionType) {
         Object[][] targetValidasi = new Object[3][3];
         

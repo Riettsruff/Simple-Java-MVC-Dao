@@ -11,7 +11,10 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class Koneksi {
     private static Connection conn;
-    
+    /**
+    * Ini fungsi yang membuat koneksi ke database
+    * @return conn yang telah di set databasenya
+    */
     public static Connection Koneksi() {
         if(conn == null) {
             try {
