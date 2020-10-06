@@ -77,11 +77,9 @@ public class ValidasiBarang extends ValidasiForm {
                 this.namaValue = (String) this.target[i][2];
                 
                 if(isNamaValid()) {
-                    System.out.println("nama valid");
                     continue;
                 } else {
                     showMessageDialog();
-                    System.out.println("nama tidak valid");
                     return false;
                 }
             }
@@ -91,11 +89,9 @@ public class ValidasiBarang extends ValidasiForm {
                 this.stokValue = (String) this.target[i][2];
                 
                 if(isStokValid()) {
-                    System.out.println("stok valid");
                    continue;
                 } else {
                     showMessageDialog();
-                    System.out.println("stok tidak valid");
                     return false;
                 }
             }
@@ -105,11 +101,9 @@ public class ValidasiBarang extends ValidasiForm {
                 this.hargaValue = (String) this.target[i][2];
                 
                 if(isHargaValid()) {
-                    System.out.println("harga valid");
                     continue;
                 } else {
                     showMessageDialog();
-                    System.out.println("harga tidak valid");
                     return false;
                 }
             }
