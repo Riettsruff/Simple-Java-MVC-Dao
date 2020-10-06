@@ -32,7 +32,7 @@ public class ValidasiForm {
     }
     /**
      * Untuk memasukkan value ke dalam dialogMessage
-     * @param dialogMessage 
+     * @param dialogMessage ini parameter string dialogMessage
      */
     protected void setDialogMessage(String dialogMessage) {
         this.dialogMessage = dialogMessage;
@@ -46,7 +46,7 @@ public class ValidasiForm {
     }
     /**
      * Berfungsi sebagai setter dari variabel isValid
-     * @param isValid 
+     * @param isValid ini parameter boolean isValid
      */
     protected void setIsValid(boolean isValid) {
         this.isValid = isValid;
@@ -60,9 +60,9 @@ public class ValidasiForm {
     }
     /**
      * Mengecek validitas dari value yang harus diisi
-     * @param label
-     * @param value
-     * @return 
+     * @param label ini parameter String label
+     * @param value ini parameter String value
+     * @return boolean
      */
     protected boolean isRequiredValid(String label, String value) {
         setIsValid(!value.equals(""));
@@ -74,9 +74,9 @@ public class ValidasiForm {
     }
     /**
      * Mengecek validitas dari angka
-     * @param label
-     * @param value
-     * @return 
+     * @param label ini parameter String label
+     * @param value ini parameter String value
+     * @return boolean
      */
     protected boolean isNumberValid(String label, String value) {
         Pattern pattern = Pattern.compile("[0-9]+");
@@ -90,9 +90,9 @@ public class ValidasiForm {
     }
     /**
      * Mengecek apakah angka tersebut lebih dari nol
-     * @param label
-     * @param value
-     * @return 
+     * @param label ini parameter String label
+     * @param value ini parameter String value
+     * @return boolean
      */
     protected boolean isNumberMoreThanZero(String label, String value) {
         setIsValid(Integer.parseInt(value) > 0);

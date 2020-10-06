@@ -88,7 +88,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }
     /**
      * Fungsi yang dieksekusi saat terjadi event click pada tombol 'Add' / 'Update
-     * @param actionType 
+     * @param actionType ini parameter String actionType
      */
     public void submitBarang(String actionType) {
         Object[][] targetValidasi = new Object[3][3];

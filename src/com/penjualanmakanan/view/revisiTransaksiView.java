@@ -112,7 +112,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     }
     /**
      * Fungsi yang dieksekusi saat terjadinya event click pada tombol 'Add' / 'Checkout'
-     * @param actionType 
+     * @param actionType ini parameter String actionType
      */
     public void submitTransaksi(String actionType) {
         Object[][] targetValidasi = new Object[2][3];
