@@ -37,8 +37,8 @@ public class ValidasiBarang extends ValidasiForm {
     
     private boolean isNamaValid() {
         return 
-            isRequiredValid(this.namaLabel, this.namaValue)
-                ? actionType == "insert" 
+            isRequiredValid(namaLabel, namaValue)
+                ? actionType == "INSERT_BARANG" 
                     ? !isNamaAlreadySet() 
                     : true
                 : false;
@@ -48,7 +48,7 @@ public class ValidasiBarang extends ValidasiForm {
         boolean isSet = false;
         
         for (int i = 0; i < listBarang.size(); i++) {
-            if (this.namaValue.equalsIgnoreCase(listBarang.get(i).toString())) {
+            if (namaValue.equalsIgnoreCase(listBarang.get(i).toString())) {
                 isSet = true;
             }
         }
@@ -58,54 +58,51 @@ public class ValidasiBarang extends ValidasiForm {
     
     private boolean isStokValid() {
         return 
-            isRequiredValid(this.stokLabel, this.stokValue)
-                ? isNumberValid(this.stokLabel, this.stokValue)
+            isRequiredValid(stokLabel, stokValue)
+                ? isNumberValid(stokLabel, stokValue)
                 : false;
     }
     
     private boolean isHargaValid() {
         return
-            isRequiredValid(this.hargaLabel, this.hargaValue)
-                ? isNumberValid(this.hargaLabel, this.hargaValue)
+            isRequiredValid(hargaLabel, hargaValue)
+                ? isNumberValid(hargaLabel, hargaValue)
                 : false;
     }
     
     public boolean isValid() {
-        for(int i = 0; i < Array.getLength(this.target); i++) {
-            if(this.target[i][0] == "nama") {
-                this.namaLabel = (String) this.target[i][1];
-                this.namaValue = (String) this.target[i][2];
-                
-                if(isNamaValid()) {
-                    continue;
-                } else {
-                    showMessageDialog();
-                    return false;
-                }
-            }
-            
-            if(this.target[i][0] == "stok") {
-                this.stokLabel = (String) this.target[i][1];
-                this.stokValue = (String) this.target[i][2];
-                
-                if(isStokValid()) {
-                   continue;
-                } else {
-                    showMessageDialog();
-                    return false;
-                }
-            }
-            
-            if(this.target[i][0] == "harga") {
-                this.hargaLabel = (String) this.target[i][1];
-                this.hargaValue = (String) this.target[i][2];
-                
-                if(isHargaValid()) {
-                    continue;
-                } else {
-                    showMessageDialog();
-                    return false;
-                }
+        for(int i = 0; i < Array.getLength(target); i++) {
+            switch((String) target[i][0]) {
+                case "nama":
+                    this.namaLabel = (String) target[i][1];
+                    this.namaValue = (String) target[i][2];
+
+                    if(isNamaValid()) {
+                        continue;
+                    } else {
+                        showMessageDialog();
+                        return false;
+                    }
+                case "stok":
+                    this.stokLabel = (String) target[i][1];
+                    this.stokValue = (String) target[i][2];
+
+                    if(isStokValid()) {
+                       continue;
+                    } else {
+                        showMessageDialog();
+                        return false;
+                    }
+                case "harga":
+                    this.hargaLabel = (String) this.target[i][1];
+                    this.hargaValue = (String) this.target[i][2];
+
+                    if(isHargaValid()) {
+                        continue;
+                    } else {
+                        showMessageDialog();
+                        return false;
+                    }
             }
         }
         

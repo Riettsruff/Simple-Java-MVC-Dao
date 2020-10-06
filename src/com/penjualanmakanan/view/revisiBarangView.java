@@ -113,14 +113,14 @@ public class revisiBarangView extends javax.swing.JFrame {
             barang.setHarga(Integer.parseInt(inputHarga.getText()));
             
             boolean isSubmitSuccess = 
-                actionType == "insert" 
+                actionType == "INSERT_BARANG" 
                     ? barangController.insertBarang(barang) 
                     : barangController.updateBarang(barang);
             
             if(isSubmitSuccess) {
                 JOptionPane.showMessageDialog(
                     this, 
-                    (actionType == "insert" ? "Penambahan" : "Update") + " Barang berhasil.",
+                    (actionType == "INSERT_BARANG" ? "Penambahan" : "Update") + " Barang berhasil.",
                     "Sukses",
                     JOptionPane.INFORMATION_MESSAGE
                 );
@@ -367,7 +367,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        submitBarang("update");
+        submitBarang("UPDATE_BARANG");
     }//GEN-LAST:event_Button_UpdateActionPerformed
 
     private void Button_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_DeleteActionPerformed
@@ -383,7 +383,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_DeleteActionPerformed
 
     private void Button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AddActionPerformed
-        submitBarang("insert");
+        submitBarang("INSERT_BARANG");
     }//GEN-LAST:event_Button_AddActionPerformed
 
     private void Button_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackActionPerformed
