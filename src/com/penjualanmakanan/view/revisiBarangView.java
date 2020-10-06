@@ -16,38 +16,22 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-class ProcessBarang extends Thread {
-
-    revisiBarangView barangView;
-
-    public ProcessBarang(revisiBarangView v) {
-        this.barangView = v;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            barangView.tampilBarang();
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-}
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
  * @author User
  */
 public class revisiBarangView extends javax.swing.JFrame {
-
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
+    
+    public revisiBarangView() {
+        initComponents();
+        initData();
+    }
     
     public void initFormValue() {
         int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
@@ -59,12 +43,11 @@ public class revisiBarangView extends javax.swing.JFrame {
 
         inputHarga.setText("");
     }
-
-    /**
-     * Ini fungsi untuk menampilkan barang di tabel. listBarang adalah arraylist yang dibuat
-     * untuk getAllBarang. Terdapat 2 dimensi array obj yang terdiri dari listBarang.size(jumlah barang yang ada)
-     * dan [5] karena ada 5 kolom
-     */
+    
+    public void initData() {
+        initFormValue();
+        tampilBarang();
+    }
     
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
@@ -139,16 +122,6 @@ public class revisiBarangView extends javax.swing.JFrame {
                 initData();
             }
         }
-    }
-    
-    public void initData() {
-        initFormValue();
-        tampilBarang();
-    }
-
-    public revisiBarangView() {
-        initComponents();
-        initData();
     }
 
     /**
@@ -362,7 +335,8 @@ public class revisiBarangView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RefreshActionPerformed
-        initData();
+//        barangController.refreshBarang();
+//        barangController.isiTabel();
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
@@ -370,14 +344,13 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_UpdateActionPerformed
 
     private void Button_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_DeleteActionPerformed
-        Barang barang = new Barang();
-        barang.setId(inputId.getText());
-        boolean deleteBarang = barangController.deleteBarang(barang);
-        if (deleteBarang) {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
+        boolean isDeleteBarangSuccess = barangController.deleteBarang(inputId.getText());
+        
+        if (isDeleteBarangSuccess) {
+            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             initData();
         } else {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_Button_DeleteActionPerformed
 
