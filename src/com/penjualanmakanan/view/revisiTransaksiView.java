@@ -16,27 +16,31 @@ import com.penjualanmakanan.model.KeranjangBelanja;
 import com.penjualanmakanan.model.Transaksi;
 import com.penjualanmakanan.util.FormatRupiah;
 import com.penjualanmakanan.util.FormatTanggal;
+import com.penjualanmakanan.util.ValidasiTransaksi;
 import java.lang.reflect.Array;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class revisiTransaksiView extends javax.swing.JFrame {
-
     List<Transaksi> listTransaksi = new ArrayList<>();
     List<Barang> listBarang = new ArrayList<>();
-    List<KeranjangBelanja> listBarangBelanjaan = new ArrayList<>();
     List<Barang> tempCustomBarang = new ArrayList<>();
 
     BarangController barangController = new BarangController();
     TransaksiController transaksiController = new TransaksiController();
     DetailTransaksiController detailTransaksiController = new DetailTransaksiController();
+    ValidasiTransaksi validasiTransaksi = new ValidasiTransaksi();
 
     FormatRupiah formatRupiah = new FormatRupiah();
+    
+    public revisiTransaksiView() {
+        initComponents();
+        initData();
+    }
 
     /**
      * Creates new form revisiTransaksiView
      */
-    
     
     public void initFormValue() {
         if (Pilihan_Barang.getItemCount() == 0) {
@@ -55,7 +59,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
 //        Tanggal_Transaksi.setText(new FormatTanggal(new Date(), "dd-MM-yyyy").toString());
         Jumlah_Barang.setText("");
 
-        listBarangBelanjaan.clear();
+//        listBarangBelanjaan.clear();
 
         Daftar_Barang_Belanjaan.setText("");
     }
@@ -101,9 +105,97 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         }
         );
     }
+    
+    public void submitTransaksi(String actionType) {
+        Object[][] targetValidasi = new Object[2][3];
+        
+        targetValidasi[0][0] = "barang";
+        targetValidasi[0][1] = "Barang";
+        targetValidasi[0][2] = 
+            Pilihan_Barang.getSelectedItem().toString().equals("-Pilih Barang-")
+                ? null
+                : Pilihan_Barang;
+        
+        targetValidasi[1][0] = "jumlah";
+        targetValidasi[1][1] = "Jumlah Barang";
+        targetValidasi[1][2] = Jumlah_Barang.getText();
+        
+        if(validasiTransaksi.isValid(targetValidasi, actionType)) {
+            List<KeranjangBelanja> keranjangBelanja = validasiTransaksi.getKeranjangBelanja();
+            
+            switch(actionType) {
+                case "ADD_ITEM_KERANJANG_BELANJA":
+                    Barang barangPilihan = validasiTransaksi.getBarangValue();
+                    int stokBarangTersedia = validasiTransaksi.getStokBarangTersedia();
+                    int jumlahBarangBeli = validasiTransaksi.getJumlahBarangBeli();
+                    
+                    String daftarBarangBelanjaanText = "";
+                    
+                    for(int i = 0; i < keranjangBelanja.size(); i++) {
+                        daftarBarangBelanjaanText += keranjangBelanja.get(i).toString();
+                        
+                        if(i < keranjangBelanja.size() - 1) {
+                            daftarBarangBelanjaanText += ", ";
+                        }
+                    }
+                    
+                    Daftar_Barang_Belanjaan.setText(daftarBarangBelanjaanText);
+                    
+                    Barang customBarang = new Barang();
+                    int indexOfCustomBarang = -1;
+                    
+                    customBarang = barangPilihan;
+                    customBarang.setStok(stokBarangTersedia - jumlahBarangBeli);
+                    
+                    for(int i = 0; i < tempCustomBarang.size(); i++) {
+                        if(tempCustomBarang.get(i).getId().equals(customBarang.getId())) {
+                            indexOfCustomBarang = i;
+                            tempCustomBarang.get(i).setStok(customBarang.getStok());
+                            
+                            break;
+                        }
+                    }
+                    
+                    if(indexOfCustomBarang == -1) tempCustomBarang.add(customBarang);
+                    
+                    tampilBarang(tempCustomBarang);
+                break;
+                case "CHECKOUT_TRANSAKSI":
+                    Transaksi transaksi = new Transaksi();
+                    transaksi.setId(Id_Transaksi.getText());
+                    transaksi.setTglTransaksi(new FormatTanggal(new Date(), "yyyy-MM-dd").toString());
+                    
+                    boolean insertTransaksi = transaksiController.insertTransaksi(transaksi);
+                    
+                    if(insertTransaksi) {
+                        for (int i = 0; i < keranjangBelanja.size(); i++) {
+                            DetailTransaksi detailTransaksi = new DetailTransaksi();
+                            detailTransaksi.setJmlBarang(keranjangBelanja.get(i).getJumlahBarang());
+                            detailTransaksi.setIdBarang(keranjangBelanja.get(i).getIdBarang());
+                            detailTransaksi.setIdTransaksi(transaksi.getId());
 
-    public revisiTransaksiView() {
-        initComponents();
+                            boolean insertDetailTransaksi = detailTransaksiController.insertDetailTransaksi(detailTransaksi);
+
+                            if (!insertDetailTransaksi) {
+                                JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops", JOptionPane.ERROR_MESSAGE);
+                                transaksiController.deleteTransaksiByIdTransaksi(transaksi.getId());
+                                
+                                return;
+                            }
+                        }
+
+                        JOptionPane.showMessageDialog(this, "Transaksi berhasil", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        initData();
+                        tempCustomBarang.clear();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops", JOptionPane.ERROR_MESSAGE);
+                    }
+            }
+        }
+    }
+    
+    public void initData() {
         initFormValue();
         tampilBarang(tempCustomBarang);
     }
@@ -297,134 +389,11 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_BackActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (listBarangBelanjaan.size() > 0) {
-            Transaksi transaksi = new Transaksi();
-            transaksi.setId(Id_Transaksi.getText());
-            transaksi.setTglTransaksi(new FormatTanggal(new Date(), "yyyy-MM-dd").toString());
-
-            boolean insertTransaksi = transaksiController.insertTransaksi(transaksi);
-
-            if (insertTransaksi) {
-                for (int i = 0; i < listBarangBelanjaan.size(); i++) {
-                    DetailTransaksi detailTransaksi = new DetailTransaksi();
-                    detailTransaksi.setJmlBarang(listBarangBelanjaan.get(i).getJumlahBarang());
-                    detailTransaksi.setIdBarang(listBarangBelanjaan.get(i).getIdBarang());
-                    detailTransaksi.setIdTransaksi(transaksi.getId());
-
-                    boolean insertDetailTransaksi = detailTransaksiController.insertDetailTransaksi(detailTransaksi);
-
-                    if (!insertDetailTransaksi) {
-                        JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                        transaksiController.deleteTransaksiByIdTransaksi(transaksi.getId());
-                        return;
-                    }
-                }
-
-                JOptionPane.showMessageDialog(this, "Transaksi berhasil");
-                initFormValue();
-                tempCustomBarang.clear();
-            } else {
-                JOptionPane.showMessageDialog(this, "Transaksi gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Daftar Barang Belanjaan masih kosong", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        submitTransaksi("CHECKOUT_TRANSAKSI");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void Button_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TambahActionPerformed
-        if (Pilihan_Barang.getSelectedItem().toString().equals("-Pilih Barang-")) {
-            JOptionPane.showMessageDialog(this, "Silahkan pilih barang terlebih dahulu", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (Jumlah_Barang.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Jumlah barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int jumlahBarang;
-
-        try {
-            jumlahBarang = Integer.parseInt(Jumlah_Barang.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Jumlah barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (jumlahBarang == 0) {
-            JOptionPane.showMessageDialog(this, "Jumlah barang minimal 1", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Barang barangTerpilih = (Barang) Pilihan_Barang.getSelectedItem();
-        KeranjangBelanja barangTerbeli = new KeranjangBelanja();
-
-        int indexOfBarangTerpilih = Pilihan_Barang.getSelectedIndex() - 1;
-        int jumlahBarangTerbeli = jumlahBarang;
-        int stokTersedia = barangController.getStokByIdBarang(barangTerpilih.getId());
-        int indexOfTargetBarangBelanjaan = -1;
-
-        for (int i = 0; i < listBarangBelanjaan.size(); i++) {
-            if (listBarangBelanjaan.get(i).getIdBarang() == barangTerpilih.getId()) {
-                indexOfTargetBarangBelanjaan = i;
-                break;
-            }
-        }
-
-        if (indexOfTargetBarangBelanjaan != -1) {
-            stokTersedia -= listBarangBelanjaan.get(indexOfTargetBarangBelanjaan).getJumlahBarang();
-        }
-
-        if (jumlahBarangTerbeli > stokTersedia) {
-            JOptionPane.showMessageDialog(this, "Stok " + barangTerpilih.getNama() + " tersisa " + stokTersedia, "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        barangTerbeli.setIdBarang(barangTerpilih.getId());
-        barangTerbeli.setNamaBarang(barangTerpilih.getNama());
-
-        if (indexOfTargetBarangBelanjaan != -1) {
-            barangTerbeli.setJumlahBarang(jumlahBarangTerbeli + listBarangBelanjaan.get(indexOfTargetBarangBelanjaan).getJumlahBarang());
-            listBarangBelanjaan.remove(indexOfTargetBarangBelanjaan);
-        } else {
-            barangTerbeli.setJumlahBarang(jumlahBarangTerbeli);
-        }
-
-        listBarangBelanjaan.add(barangTerbeli);
-
-        String daftarBarangBelanjaan = "";
-
-        for (int i = 0; i < listBarangBelanjaan.size(); i++) {
-            daftarBarangBelanjaan += listBarangBelanjaan.get(i).toString();
-
-            if (i < listBarangBelanjaan.size() - 1) {
-                daftarBarangBelanjaan += ", ";
-            }
-        }
-
-        Daftar_Barang_Belanjaan.setText(daftarBarangBelanjaan);
-
-        Barang customBarang = new Barang();
-        int indexOfTargetCustomBarang = -1;
-
-        customBarang = barangTerpilih;
-        customBarang.setStok(stokTersedia - jumlahBarangTerbeli);
-
-        for (int i = 0; i < tempCustomBarang.size(); i++) {
-            if (tempCustomBarang.get(i).getId() == customBarang.getId()) {
-                indexOfTargetCustomBarang = i;
-                tempCustomBarang.get(i).setStok(customBarang.getStok());
-                break;
-            }
-        }
-
-        if (indexOfTargetCustomBarang == -1) {
-            tempCustomBarang.add(customBarang);
-        }
-
-        tampilBarang(tempCustomBarang);
+        submitTransaksi("ADD_ITEM_KERANJANG_BELANJA");
     }//GEN-LAST:event_Button_TambahActionPerformed
 
     /**
