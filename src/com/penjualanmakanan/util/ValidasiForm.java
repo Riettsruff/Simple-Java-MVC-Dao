@@ -61,6 +61,15 @@ public class ValidasiForm {
         return isValid;
     }
     
+    protected boolean isNumberMoreThanZero(String label, String value) {
+        setIsValid(Integer.parseInt(value) > 0);
+        
+        setDialogTitle(isValid ? "Sukses" : "Error");
+        setDialogMessage(isValid ? "" : label + " wajib berupa angka.");
+        
+        return isValid;
+    }
+    
     protected void showMessageDialog() {
         JOptionPane.showMessageDialog(
             null,
