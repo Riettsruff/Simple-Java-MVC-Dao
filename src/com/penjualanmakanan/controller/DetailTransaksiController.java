@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.DetailTransaksi;
 import static com.penjualanmakanan.util.Koneksi.Koneksi;
 import java.sql.Types;
