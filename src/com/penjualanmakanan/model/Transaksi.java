@@ -13,7 +13,6 @@ package com.penjualanmakanan.model;
 public class Transaksi {
     private String id;
     private String tglTransaksi;
-
     
     /**
      * Ini merupakan method untuk mendapatkan id  
@@ -24,7 +23,7 @@ public class Transaksi {
     }
 
     /**
-     * Ini merupakan method untuk mengatur id barang
+     * @param id Untuk mengatur idTransaksi
      */
     public void setId(String id) {
         this.id = id;
@@ -39,7 +38,7 @@ public class Transaksi {
     }
 
     /**
-     * Ini merupakan method untuk mengatur tglTransaksi 
+     * @param tglTransaksi Untuk mengatur tglTransaksi 
      */
     public void setTglTransaksi(String tglTransaksi) {
         this.tglTransaksi = tglTransaksi;

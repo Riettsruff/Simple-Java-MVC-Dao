@@ -67,7 +67,6 @@ public class Barang {
 
     /**
      * Ini method untuk mendapatkan harga barang
-     * @harga 
      */
     public int getHarga() {
         return harga;

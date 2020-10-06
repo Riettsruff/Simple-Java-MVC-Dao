@@ -24,9 +24,8 @@ public class KeranjangBelanja {
     }
     
     /**
-     * Ini method untuk mengatur idBarang yang akan 
+     * @param idBarang Untuk mengatur idBarang yang akan 
      */
-    
     public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
     }
@@ -41,9 +40,8 @@ public class KeranjangBelanja {
     }
     
     /**
-     * Ini method untuk mengatur namaBarang yang akan dibeli
+     * @param namaBarang Untuk mengatur namaBarang yang akan dibeli
      */
-    
     public void setNamaBarang(String namaBarang) {
         this.namaBarang = namaBarang;
     }
@@ -57,7 +55,7 @@ public class KeranjangBelanja {
     }
     
     /**
-     * Ini method untuk mengatur jumlahBarang yang akan dibeli
+     * @param jumlahBarang Untuk mengatur jumlahBarang yang akan dibeli
      */
     public void setJumlahBarang(int jumlahBarang) {
         this.jumlahBarang = jumlahBarang;

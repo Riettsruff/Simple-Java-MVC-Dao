@@ -15,10 +15,9 @@ import java.util.Date;
 public class FormatTanggal {
     private Date tanggal;
     private String format;
-    /**
-     * Untuk mengisi tanggal yang akan diformat dan mengisi format yang akan digunakan
-     * @param tanggal
-     * @param format 
+    /** 
+     * @param tanggal Untuk mengisi tanggal yang akan diformat
+     * @param format Untuk mengisi format yang akan digunakan
      */
     public FormatTanggal(Date tanggal, String format) {
         this.tanggal = tanggal;

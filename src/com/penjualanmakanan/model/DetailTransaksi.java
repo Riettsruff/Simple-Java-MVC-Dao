@@ -25,9 +25,8 @@ public class DetailTransaksi {
     }
 
     /**
-     * Ini method untuk mengatur id detailTransaksi 
+     * @param id Untuk mengatur id detailTransaksi 
      */
-    
     public void setId(int id) {
         this.id = id;
     }
@@ -41,9 +40,8 @@ public class DetailTransaksi {
     }
 
     /**
-     * Ini method untuk mengatur jumlah Barang
+     * @param jmlBarang Untuk mengatur jumlah Barang
      */
-    
     public void setJmlBarang(int jmlBarang) {
         this.jmlBarang = jmlBarang;
     }
@@ -58,9 +56,8 @@ public class DetailTransaksi {
     }
 
     /**
-     * Ini method untuk mengatur idTransaksi
+     * @param idTransaksi Untuk mengatur idTransaksi
      */
-    
     public void setIdTransaksi(String idTransaksi) {
         this.idTransaksi = idTransaksi;
     }
@@ -69,13 +66,12 @@ public class DetailTransaksi {
      * Ini method untuk mendapatkan idBarang
      * @return idBarang bertipe String 
      */
-    
     public String getIdBarang() {
         return idBarang;
     }
 
     /**
-     * Ini method untuk mengatur idBarang
+     * @param idBarang Untuk mengatur idBarang
      */
     public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
