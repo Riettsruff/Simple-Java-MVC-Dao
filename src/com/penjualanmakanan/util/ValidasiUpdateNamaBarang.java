@@ -16,7 +16,7 @@ public class ValidasiUpdateNamaBarang {
     List<Barang> listBarang = new ArrayList<>();
 
     public boolean cekNamaBarang(String namaBarang) {
-        listBarang = new BarangController().getAllBarang();
+//        listBarang = new BarangController().getAllBarang();
         boolean cek;
         cek = false;
         for (int i = 0; i < listBarang.size(); i++) {

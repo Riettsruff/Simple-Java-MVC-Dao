@@ -12,10 +12,15 @@ import java.util.List;
  *
  * @author Boona
  */
-public interface PenjualanDao {
-    public boolean insertBarang(Barang barang);
-    public boolean deleteBarang(Barang barang);
-    public boolean updateBarang(Barang barang);
+public interface ImplBarangDao {
+
+    /**
+     *
+     * @param barang
+     */
+    public void insertBarang(Barang barang);
+    public void deleteBarang(int id);
+    public void updateBarang(Barang barang);
     public List<Barang> getAllBarang();
     public String getMaxIdBarang();
     public int getStokByIdBarang(String idBarang);

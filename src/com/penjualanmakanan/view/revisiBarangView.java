@@ -16,28 +16,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-class ProcessBarang extends Thread {
-
-    revisiBarangView barangView;
-
-    public ProcessBarang(revisiBarangView v) {
-        this.barangView = v;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            barangView.tampilBarang();
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Process.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-}
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -46,140 +26,36 @@ class ProcessBarang extends Thread {
 public class revisiBarangView extends javax.swing.JFrame {
 
     List<Barang> listBarang = new ArrayList<>();
-    BarangController barangController = new BarangController();
-    FormatRupiah formatRupiah = new FormatRupiah();
-    ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
-
-    /**
-     * Ini fungsi untuk menampilkan barang di tabel. listBarang adalah arraylist yang dibuat
-     * untuk getAllBarang. Terdapat 2 dimensi array obj yang terdiri dari listBarang.size(jumlah barang yang ada)
-     * dan [5] karena ada 5 kolom
-     */
-    
-    public void tampilBarang() {
-        listBarang = new BarangController().getAllBarang();
-
-        Object[][] obj = new Object[listBarang.size()][5];
-
-        for (int i = 0; i < listBarang.size(); i++) {
-            obj[i][0] = (i + 1) + ".";
-            obj[i][1] = listBarang.get(i).getId();
-            obj[i][2] = listBarang.get(i).getNama();
-            obj[i][3] = listBarang.get(i).getStok();
-            obj[i][4] = formatRupiah.kurensi(listBarang.get(i).getHarga());
-        }
-
-        tabelBarang.setModel(
-                new javax.swing.table.DefaultTableModel(
-                        obj,
-                        new String[]{
-                            "No.", "ID Barang", "Nama Barang", "Stok Barang", "Harga Barang"
-                        }
-                ) {
-            boolean[] canEdit = new boolean[]{
-                false, false, false, false, false
-            };
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        }
-        );
-    }
-
-    /**
-     * Ini fungsi untuk validasi Barang sebelum di input atau update. Saat masuk ke bagian else
-     * akan dilihat ini validasi untuk insert atau update. Jika untuk insert maka ada checking
-     * lagi apakah stok dan harga yang diinput tidak berupa angka. Jika untuk update maka ada 
-     * checking apakah stok yang diinput tidak berupa angka dan untuk harga sudah di substring dan replace
-     * @param pilihan Ini parameter pilihan  
-     */
-    
-    public void validasiBarang(String pilihan) {
-        if (inputNama.getText().equals("") && inputStok.getText().equals("")
-                && inputHarga.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputNama.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Nama barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputStok.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Stok barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputHarga.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (validasiupdatenamabarang.cekNamaBarang(inputNama.getText())) {
-            JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (pilihan.equalsIgnoreCase("insertBarang")) {
-                try {
-                    Integer.parseInt(inputStok.getText());
-                    Integer.parseInt(inputHarga.getText());
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                Barang barang = new Barang();
-                barang.setId(inputId.getText());
-                barang.setNama(inputNama.getText());
-                barang.setStok(Integer.parseInt(inputStok.getText()));
-                barang.setHarga(Integer.parseInt(inputHarga.getText()));
-
-                boolean insertBarang = barangController.insertBarang(barang);
-                if (insertBarang) {
-                    JOptionPane.showMessageDialog(this, "Penambahan barang berhasil");
-                    initData();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Penambahan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } else if (pilihan.equalsIgnoreCase("updateBarang")) {
-                try {
-                    Integer.parseInt(inputStok.getText());
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                Barang barang = new Barang();
-                barang.setId(inputId.getText());
-                barang.setNama(inputNama.getText());
-                barang.setStok(Integer.parseInt(inputStok.getText()));
-                barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
-
-                boolean updateBarang = barangController.updateBarang(barang);
-
-                if (updateBarang) {
-                    JOptionPane.showMessageDialog(this, "Update barang berhasil");
-                    initData();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-        }
-    }
-
-    /**
-     * ini fungsi yang digunakan untuk secara automatis menyiapkan saat ada barang baru hendak diinsert
-     */
-    
-    public void initData() {
-        int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
-        inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));
-
-        inputNama.setText("");
-
-        inputStok.setText("");
-
-        inputHarga.setText("");
-
-        tampilBarang();
-    }
+//    FormatRupiah formatRupiah = new FormatRupiah();
+//    ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
+    private BarangController barangController;
 
     public revisiBarangView() {
         initComponents();
-        initData();
+        
+        barangController = new BarangController(this);
+        barangController.isiTabel();
     }
+    
+    public JTextField getInputId() {
+        return inputId;
+    }
+    
+    public JTextField getInputNama() {
+        return inputNama;
+    }
+    
+    public JTextField getInputStok() {
+        return inputStok;
+    }
+    
+    public JTextField getInputHarga() {
+        return inputHarga;
+    }
+    public JTable getTabelBarang() {
+        return tabelBarang;
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -392,27 +268,27 @@ public class revisiBarangView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Button_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RefreshActionPerformed
-        initData();
+        barangController.refreshBarang();
+        barangController.isiTabel();
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        validasiBarang("updateBarang");
+//        validasiBarang("updateBarang");
+        barangController.updateBarang();
+        barangController.isiTabel();
+        barangController.refreshBarang();
     }//GEN-LAST:event_Button_UpdateActionPerformed
 
     private void Button_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_DeleteActionPerformed
-        Barang barang = new Barang();
-        barang.setId(inputId.getText());
-        boolean deleteBarang = barangController.deleteBarang(barang);
-        if (deleteBarang) {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
-            initData();
-        } else {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-        }
+        barangController.deleteBarang();
+        barangController.isiTabel();
+        barangController.refreshBarang();
     }//GEN-LAST:event_Button_DeleteActionPerformed
 
     private void Button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AddActionPerformed
-        validasiBarang("insertBarang");
+        barangController.insertBarang();
+        barangController.isiTabel();
+        barangController.refreshBarang();
     }//GEN-LAST:event_Button_AddActionPerformed
 
     private void Button_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackActionPerformed
