@@ -8,7 +8,6 @@ package com.penjualanmakanan.util;
 import com.penjualanmakanan.controller.BarangController;
 import com.penjualanmakanan.model.Barang;
 import com.penjualanmakanan.model.KeranjangBelanja;
-import com.penjualanmakanan.model.Transaksi;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;

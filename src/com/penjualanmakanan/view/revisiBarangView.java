@@ -10,14 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.model.Barang;
 import com.penjualanmakanan.util.FormatRupiah;
-import com.penjualanmakanan.util.FormatTanggal;
 import com.penjualanmakanan.util.ValidasiBarang;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
 /**
  *

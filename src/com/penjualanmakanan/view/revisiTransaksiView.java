@@ -17,12 +17,10 @@ import com.penjualanmakanan.model.Transaksi;
 import com.penjualanmakanan.util.FormatRupiah;
 import com.penjualanmakanan.util.FormatTanggal;
 import com.penjualanmakanan.util.ValidasiTransaksi;
-import java.lang.reflect.Array;
 import java.util.Date;
 import javax.swing.JOptionPane;
 /**
 * Creates new form revisiTransaksiView
-* @param 
 */
 public class revisiTransaksiView extends javax.swing.JFrame {
     List<Transaksi> listTransaksi = new ArrayList<>();
