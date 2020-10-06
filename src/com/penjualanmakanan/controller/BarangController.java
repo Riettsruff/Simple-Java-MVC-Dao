@@ -21,26 +21,56 @@ public class BarangController {
         implementBarang = new BarangDao();
     }
     
+    /**
+     * Function untuk mendapatkan semua barang yang ada pada database. Logika ada di class Dao
+     * @return implemenBarang.getAll() yang merupakan method pada class dao barang
+     */
     public List<Barang> getAllBarang() {
         return implementBarang.getAll();
     }
     
+    /**
+     * Function untuk mendapatkan id barang yang terakhir kali ditambahkan
+     * @return implementBarang.getMaxId() yang merupakan method pada class dao barang
+     */
     public String getMaxIdBarang() {
         return implementBarang.getMaxId();
     }
+    
+    /**
+     * Function untuk memperoleh stok berdasarkan id barang
+     * @param idBarang
+     * @return implementBarang.getStokById(idBarang) yang merupakan methd pada class dao barang
+     */
     
     public int getStokByIdBarang(String idBarang) {
         return implementBarang.getStokById(idBarang);
     }
     
+    /**
+     * Function untuk insert atau menambahkan barang
+     * @param barang Ini parameter objek barang
+     * @return implementBarang.insert(barang) yang merupakan method pada class dao barang
+     */
     public boolean insertBarang(Barang barang){
         return implementBarang.insert(barang);
     }
+    
+     /**
+     * Function untuk update barang
+     * @param barang Ini parameter objek barang
+     * @return implementBarang.update(barang) yang merupakan method pada class dao barang
+     */
     
     public boolean updateBarang(Barang barang){
         return implementBarang.update(barang);
     }
     
+     /**
+     * Function untuk delete atau menghapus barang
+     * @param idBarang Ini parameter idBarang yang akan dihapus
+     * @return implementBarang.delete(idVarang) yang merupakan method pada class dao barang
+     */
     public boolean deleteBarang(String idBarang){
         return implementBarang.delete(idBarang);
     }

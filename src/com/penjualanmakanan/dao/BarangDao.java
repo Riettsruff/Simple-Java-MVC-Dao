@@ -25,6 +25,12 @@ public class BarangDao implements ImplementBarang {
         conn = Koneksi();
     }
  
+    /**
+     * Ini adalah function untuk insert barang. Terdapat query untuk insert barang yang setiap value nya didapat
+     * dari method get pada class model barang
+     * @param barang Ini parameter objek barang
+     * @return boolean
+     */
     @Override
     public boolean insert(Barang barang) {
         try {
@@ -48,6 +54,13 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    /**
+     * Ini adalah function untuk delete barang. Terdapat query untuk delete barang yang id barang nya didapat
+     * dari method pada class model barang
+     * @param idBarang Ini parameter idBarang yang akan dihapus
+     * @return boolean
+     */
+    
     @Override
     public boolean delete(String idBarang) {
         try {
@@ -68,6 +81,13 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    /**
+     * Ini adalah function untuk update barang. Terdapat query untuk update barang yang setiap nilai ? nya didapat
+     * dari method get pada class model barang
+     * @param barang Ini parameter objek barang
+     * @return boolean
+     */
+    
     @Override
     public boolean update(Barang barang) {
         try {
@@ -91,6 +111,12 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    /**
+     * Ini adalah function untuk menampilkan list barang dari database. 
+     * Terdapat query untuk select barang
+     * @return array list yang sudah berisi barang 
+     */
+    
     @Override
     public List<Barang> getAll() {
         List<Barang> listBarang = new ArrayList<>();
@@ -120,6 +146,12 @@ public class BarangDao implements ImplementBarang {
         return listBarang;
     }
 
+    /**
+     * Ini adalah function untuk mencari id barang yang terakhir kali diinput. 
+     * Terdapat query untuk mencari id barang yang terakhir kali diinput
+     * @return maxIdBarang bertipe String
+     */
+    
     @Override
     public String getMaxId() {
         String maxIdBarang = "001";
@@ -144,6 +176,13 @@ public class BarangDao implements ImplementBarang {
         return maxIdBarang;
     }
 
+    /**
+     * Ini adalah function untuk select stok berdasarkan id barang. 
+     * Terdapat query untuk select stok barang berdasarkan id
+     * @param idBarang Ini parameter String idBarang
+     * @return stok bertipe Int
+     */
+    
     @Override
     public int getStokById(String idBarang) {
         int stok = 0;
