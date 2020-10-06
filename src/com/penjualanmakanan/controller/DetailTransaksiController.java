@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.penjualanmakanan.controller;
+import com.penjualanmakanan.dao.DetailTransaksiDao;
+import com.penjualanmakanan.dao.ImplementDetailTransaksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,59 +21,17 @@ import java.sql.Types;
  * @author Riett
  */
 public class DetailTransaksiController {
-    Connection conn;
+    private ImplementDetailTransaksi implementDetailTransaksi;
     
     public DetailTransaksiController() {
-        conn = Koneksi();
+        implementDetailTransaksi = new DetailTransaksiDao();
     }
     
     public List<DetailTransaksi> getAllDetailTransaksi() {
-       List<DetailTransaksi> listDetailTransaksi = new ArrayList<>();
-
-       try {
-           String query = "\"SELECT id, jml_barang, id_barang, id_transaksi FROM `detail_transaksi` \"";
-           
-           PreparedStatement ps = conn.prepareStatement(query);
-           ResultSet rs = ps.executeQuery();
-
-           while(rs.next()) {
-               DetailTransaksi detailtransaksi = new DetailTransaksi();
-
-               detailtransaksi.setId(rs.getInt("id"));
-               detailtransaksi.setJmlBarang(rs.getInt("jml_barang"));
-               detailtransaksi.setIdBarang(rs.getString("id_barang"));
-               detailtransaksi.setIdTransaksi(rs.getString("id_transaksi"));
-
-               listDetailTransaksi.add(detailtransaksi);
-           }
-       } catch (SQLException se) {
-           se.printStackTrace();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
-       return listDetailTransaksi;
+       return implementDetailTransaksi.getAll();
    }
    
    public boolean insertDetailTransaksi(DetailTransaksi detailTransaksi) {
-       try {
-           String query = "INSERT INTO detail_transaksi (id, jml_barang, id_barang, id_transaksi) VALUES (?, ?, ?, ?)";
-           
-           PreparedStatement ps = conn.prepareStatement(query);
-           ps.setInt(1, Types.NULL);
-           ps.setInt(2, detailTransaksi.getJmlBarang());
-           ps.setString(3, detailTransaksi.getIdBarang());
-           ps.setString(4, detailTransaksi.getIdTransaksi());
-            
-           if (ps.executeUpdate() > 0){
-               return true;
-           }
-       } catch (SQLException se) {
-           se.printStackTrace();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       
-       return false;
+       return implementDetailTransaksi.insert(detailTransaksi);
    }
 }
