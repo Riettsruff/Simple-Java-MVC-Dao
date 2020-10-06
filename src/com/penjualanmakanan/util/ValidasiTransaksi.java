@@ -148,6 +148,7 @@ public class ValidasiTransaksi extends ValidasiForm {
      * Untuk mengecek validitas suatu form secara keseluruhan
      * @param target Untuk menyetel target dari kumpulan field yang ingin diuji validitasnya
      * @param actionType Untuk menyetel type action baik itu "ADD_ITEM_KERANJANG_BELANJA" atau "CHECKOUT_TRANSAKSI"
+     * @return true/false setelah selesai dicek
      */
     public boolean isValid(Object[][] target, String actionType) {
         this.target = target;

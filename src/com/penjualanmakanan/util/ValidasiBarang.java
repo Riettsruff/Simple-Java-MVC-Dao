@@ -88,7 +88,7 @@ public class ValidasiBarang extends ValidasiForm {
     /**
      * Mengecek validitas dari keseluruhan value form barang
      *
-     * @return true setelah selesai dicek
+     * @return true/false setelah selesai dicek
      */
     public boolean isValid() {
         for (int i = 0; i < Array.getLength(target); i++) {
