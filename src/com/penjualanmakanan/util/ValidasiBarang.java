@@ -94,8 +94,8 @@ public class ValidasiBarang extends ValidasiForm {
                         return false;
                     }
                 case "harga":
-                    this.hargaLabel = (String) this.target[i][1];
-                    this.hargaValue = (String) this.target[i][2];
+                    this.hargaLabel = (String) target[i][1];
+                    this.hargaValue = (String) target[i][2];
 
                     if(isHargaValid()) {
                         continue;
