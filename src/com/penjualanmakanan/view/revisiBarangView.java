@@ -374,10 +374,10 @@ public class revisiBarangView extends javax.swing.JFrame {
         barang.setId(inputId.getText());
         boolean deleteBarang = barangController.deleteBarang(barang);
         if (deleteBarang) {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil");
+            JOptionPane.showMessageDialog(this, "Penghapusan barang berhasil", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             initData();
         } else {
-            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Penghapusan barang gagal", "Oops", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_Button_DeleteActionPerformed
 

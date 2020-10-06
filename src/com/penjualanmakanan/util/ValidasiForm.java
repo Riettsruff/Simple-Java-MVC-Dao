@@ -44,7 +44,7 @@ public class ValidasiForm {
     protected boolean isRequiredValid(String label, String value) {
         setIsValid(!value.equals(""));
         
-        setDialogTitle(isValid ? "Sukses" : "Error");
+        setDialogTitle(isValid ? "Sukses" : "Oops");
         setDialogMessage(isValid ? "" : label + " wajib diisi.");
         
         return isValid;
@@ -55,7 +55,7 @@ public class ValidasiForm {
         
         setIsValid(pattern.matcher(value).matches());
         
-        setDialogTitle(isValid ? "Sukses" : "Error");
+        setDialogTitle(isValid ? "Sukses" : "Oops");
         setDialogMessage(isValid ? "" : label + " wajib berupa angka.");
         
         return isValid;
@@ -64,7 +64,7 @@ public class ValidasiForm {
     protected boolean isNumberMoreThanZero(String label, String value) {
         setIsValid(Integer.parseInt(value) > 0);
         
-        setDialogTitle(isValid ? "Sukses" : "Error");
+        setDialogTitle(isValid ? "Sukses" : "Oops");
         setDialogMessage(isValid ? "" : label + " wajib berupa angka.");
         
         return isValid;
