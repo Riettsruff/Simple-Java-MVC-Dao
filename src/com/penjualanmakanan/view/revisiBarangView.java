@@ -48,6 +48,17 @@ public class revisiBarangView extends javax.swing.JFrame {
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
+    
+    public void initFormValue() {
+        int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
+        inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));
+
+        inputNama.setText("");
+
+        inputStok.setText("");
+
+        inputHarga.setText("");
+    }
 
     /**
      * Ini fungsi untuk menampilkan barang di tabel. listBarang adalah arraylist yang dibuat
@@ -129,21 +140,9 @@ public class revisiBarangView extends javax.swing.JFrame {
             }
         }
     }
-
-    /**
-     * ini fungsi yang digunakan untuk secara automatis menyiapkan saat ada barang baru hendak diinsert
-     */
     
     public void initData() {
-        int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
-        inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));
-
-        inputNama.setText("");
-
-        inputStok.setText("");
-
-        inputHarga.setText("");
-
+        initFormValue();
         tampilBarang();
     }
 
