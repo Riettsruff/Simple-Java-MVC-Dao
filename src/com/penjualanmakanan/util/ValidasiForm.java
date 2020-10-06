@@ -21,8 +21,16 @@ public class ValidasiForm {
         this.dialogTitle = dialogTitle;
     }
     
+    protected String getDialogTitle() {
+        return dialogTitle;
+    }
+    
     protected void setDialogMessage(String dialogMessage) {
         this.dialogMessage = dialogMessage;
+    }
+    
+    protected String getDialogMessage() {
+        return dialogMessage;
     }
     
     protected void setIsValid(boolean isValid) {
