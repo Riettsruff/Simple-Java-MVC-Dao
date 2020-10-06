@@ -86,14 +86,6 @@ public class revisiBarangView extends javax.swing.JFrame {
         }
         );
     }
-
-    /**
-     * Ini fungsi untuk validasi Barang sebelum di input atau update. Saat masuk ke bagian else
-     * akan dilihat ini validasi untuk insert atau update. Jika untuk insert maka ada checking
-     * lagi apakah stok dan harga yang diinput tidak berupa angka. Jika untuk update maka ada 
-     * checking apakah stok yang diinput tidak berupa angka dan untuk harga sudah di substring dan replace
-     * @param pilihan Ini parameter pilihan  
-     */
     
     public void submitBarang(String actionType) {
         Object[][] targetValidasi = new Object[3][3];
@@ -135,67 +127,6 @@ public class revisiBarangView extends javax.swing.JFrame {
                 
                 initData();
             }
-        }
-    }
-    
-    public void validasiBarang(String pilihan) {
-        if (inputNama.getText().equals("") && inputStok.getText().equals("")
-                && inputHarga.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputNama.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Nama barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputStok.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Stok barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (inputHarga.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (pilihan.equalsIgnoreCase("insertBarang")) {
-                try {
-                    Integer.parseInt(inputStok.getText());
-                    Integer.parseInt(inputHarga.getText());
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                Barang barang = new Barang();
-                barang.setId(inputId.getText());
-                barang.setNama(inputNama.getText());
-                barang.setStok(Integer.parseInt(inputStok.getText()));
-                barang.setHarga(Integer.parseInt(inputHarga.getText()));
-
-                boolean insertBarang = barangController.insertBarang(barang);
-                if (insertBarang) {
-                    JOptionPane.showMessageDialog(this, "Penambahan barang berhasil");
-                    initData();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Penambahan barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } else if (pilihan.equalsIgnoreCase("updateBarang")) {
-                try {
-                    Integer.parseInt(inputStok.getText());
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                Barang barang = new Barang();
-                barang.setId(inputId.getText());
-                barang.setNama(inputNama.getText());
-                barang.setStok(Integer.parseInt(inputStok.getText()));
-                barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
-
-                boolean updateBarang = barangController.updateBarang(barang);
-
-                if (updateBarang) {
-                    JOptionPane.showMessageDialog(this, "Update barang berhasil");
-                    initData();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update barang gagal", "Oops!", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
         }
     }
 
