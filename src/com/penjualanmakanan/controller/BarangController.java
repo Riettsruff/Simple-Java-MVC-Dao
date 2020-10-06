@@ -5,13 +5,13 @@
  */
 package com.penjualanmakanan.controller;
 
+import com.penjualanmakanan.dao.PenjualanDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import com.penjualanmakanan.util.Koneksi;
 import com.penjualanmakanan.model.Barang;
 import static com.penjualanmakanan.util.Koneksi.Koneksi;
 
@@ -19,14 +19,19 @@ import static com.penjualanmakanan.util.Koneksi.Koneksi;
  *
  * @author Riett
  */
-public class BarangController {
+public class BarangController implements PenjualanDao{
 
     Connection conn;
 
     public BarangController() {
         conn = Koneksi();
     }
-
+    
+    /**
+     *
+     * @return
+     */
+    @Override
     public List<Barang> getAllBarang() {
         List<Barang> listBarang = new ArrayList<>();
         
@@ -57,6 +62,12 @@ public class BarangController {
 
     }
 
+    /**
+     *
+     * @param barang
+     * @return
+     */
+    @Override
     public boolean deleteBarang(Barang barang) {
         try {
             String query = "DELETE From barang WHERE id=?";
@@ -76,6 +87,12 @@ public class BarangController {
         return false;
     }
 
+    /**
+     *
+     * @param barang
+     * @return
+     */
+    @Override
     public boolean insertBarang(Barang barang) {
         try {
             String query = "INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)";
@@ -98,6 +115,12 @@ public class BarangController {
         return false;
     }
 
+    /**
+     *
+     * @param idBarang
+     * @return
+     */
+    @Override
     public int getStokByIdBarang(String idBarang) {
         int stok = 0;
 
@@ -121,6 +144,11 @@ public class BarangController {
         return stok;
     }
     
+    /**
+     *
+     * @return
+     */
+    @Override
     public String getMaxIdBarang() {
         String maxIdBarang = "001";
 
@@ -144,6 +172,12 @@ public class BarangController {
         return maxIdBarang;
     }
 
+    /**
+     *
+     * @param barang
+     * @return
+     */
+    @Override
     public boolean updateBarang(Barang barang) {
         try {
             String query = "UPDATE barang SET nama = ?, stok = ?, harga = ? WHERE id = ?";

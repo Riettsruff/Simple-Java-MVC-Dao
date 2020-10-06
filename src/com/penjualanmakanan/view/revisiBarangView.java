@@ -74,6 +74,7 @@ public class revisiBarangView extends javax.swing.JFrame {
                 false, false, false, false, false
             };
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -85,19 +86,14 @@ public class revisiBarangView extends javax.swing.JFrame {
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Form wajib diisi dengan lengkap", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
         } else if (inputNama.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Nama barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
         } else if (inputStok.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Stok barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
         } else if (inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
         } else if (validasiupdatenamabarang.cekNamaBarang(inputNama.getText())) {
             JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
-            return;
         } else {
             try {
                 Integer.parseInt(inputStok.getText());
