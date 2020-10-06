@@ -38,22 +38,37 @@ public class ValidasiTransaksi extends ValidasiForm {
     
     private int jumlahBarangBeli;
     
+    /**
+     * Sebagai getter dari barangValue
+     */
     public Barang getBarangValue() {
         return barangValue;
     }
     
+    /**
+     * Sebagai getter dari stokBarangTersedia
+     */
     public int getStokBarangTersedia() {
         return stokBarangTersedia;
     }
     
+    /**
+     * Sebagai getter dari jumlahBarangBeli
+     */
     public int getJumlahBarangBeli() {
         return jumlahBarangBeli;
     }
     
+    /**
+     * Sebagai getter dari keranjangBelanja
+     */
     public List<KeranjangBelanja> getKeranjangBelanja() {
         return keranjangBelanja;
     }
     
+    /**
+     * Untuk mengecek validitas inputan barang
+     */
     private boolean isBarangValid() {
         return isRequiredValid(
             barangLabel, 
@@ -61,6 +76,9 @@ public class ValidasiTransaksi extends ValidasiForm {
         );
     }
     
+    /**
+     * Untuk mengecek validitas inputan jumlah barang
+     */
     private boolean isJumlahValid() {
         return 
             isRequiredValid(jumlahLabel, jumlahValue)
@@ -70,10 +88,16 @@ public class ValidasiTransaksi extends ValidasiForm {
                 : false;
     }
     
+    /**
+     * Untuk mengecek kebenaran dari keranjang belanja yang kosong
+     */
     private boolean isKeranjangBelanjaEmpty() {
         return keranjangBelanja.size() == 0 ? true : false;
     }
     
+    /**
+     * Untuk mengecek kesuksesan dari penambahan item ke keranjang belanja
+     */
     private boolean isAddItemKeranjangBelanjaSuccess() {
         KeranjangBelanja barangBeli = new KeranjangBelanja();
         
@@ -120,6 +144,11 @@ public class ValidasiTransaksi extends ValidasiForm {
         return true;
     }
     
+    /**
+     * Untuk mengecek validitas suatu form secara keseluruhan
+     * @param target Untuk menyetel target dari kumpulan field yang ingin diuji validitasnya
+     * @param actionType Untuk menyetel type action baik itu "ADD_ITEM_KERANJANG_BELANJA" atau "CHECKOUT_TRANSAKSI"
+     */
     public boolean isValid(Object[][] target, String actionType) {
         this.target = target;
         this.actionType = actionType;
