@@ -7,14 +7,9 @@ package com.penjualanmakanan.controller;
 
 import com.penjualanmakanan.dao.ImplementTransaksi;
 import com.penjualanmakanan.dao.TransaksiDao;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import com.penjualanmakanan.model.Transaksi;
-import static com.penjualanmakanan.util.Koneksi.Koneksi;
+
 /**
  *
  * @author Riett
