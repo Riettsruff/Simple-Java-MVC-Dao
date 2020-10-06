@@ -19,12 +19,6 @@ import java.util.List;
  * @author Boona
  */
 public class BarangDao implements ImplementBarang {
-    Connection conn;
-
-    public BarangDao() {
-        conn = Koneksi();
-    }
- 
     /**
      * Ini adalah function untuk insert barang. Terdapat query untuk insert barang yang setiap value nya didapat
      * dari method get pada class model barang
@@ -36,7 +30,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)";
             
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = Koneksi().prepareStatement(query);
             ps.setString(1, barang.getId());
             ps.setString(2, barang.getNama());
             ps.setInt(3, barang.getStok());
@@ -66,7 +60,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "DELETE FROM barang WHERE id=?";
             
-            PreparedStatement ps = conn.prepareStatement(query);       
+            PreparedStatement ps = Koneksi().prepareStatement(query);       
             ps.setString(1, idBarang);
             
             if (ps.executeUpdate() > 0) {
@@ -93,7 +87,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "UPDATE barang SET nama = ?, stok = ?, harga = ? WHERE id = ?";
             
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = Koneksi().prepareStatement(query);
             ps.setString(1, barang.getNama());
             ps.setInt(2, barang.getStok());
             ps.setInt(3, barang.getHarga());
@@ -124,7 +118,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "SELECT id, nama, stok, harga FROM `barang`";
             
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = Koneksi().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -159,7 +153,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "SELECT RIGHT((SElECT MAX(id) AS max_id FROM barang), 3) AS \"max_id\"";
 
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = Koneksi().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -190,7 +184,7 @@ public class BarangDao implements ImplementBarang {
         try {
             String query = "SELECT stok FROM barang WHERE id = ?";
 
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = Koneksi().prepareStatement(query);
             ps.setString(1, idBarang);
                     
             ResultSet rs = ps.executeQuery();

@@ -20,12 +20,6 @@ import java.util.List;
  * @author Riett
  */
 public class DetailTransaksiDao implements ImplementDetailTransaksi {
-    Connection conn;
-    
-    public DetailTransaksiDao() {
-        conn = Koneksi();
-    }
-    
     @Override
     public List<DetailTransaksi> getAll() {
        List<DetailTransaksi> listDetailTransaksi = new ArrayList<>();
@@ -33,7 +27,7 @@ public class DetailTransaksiDao implements ImplementDetailTransaksi {
        try {
            String query = "\"SELECT id, jml_barang, id_barang, id_transaksi FROM `detail_transaksi` \"";
            
-           PreparedStatement ps = conn.prepareStatement(query);
+           PreparedStatement ps = Koneksi().prepareStatement(query);
            ResultSet rs = ps.executeQuery();
 
            while(rs.next()) {
@@ -60,7 +54,7 @@ public class DetailTransaksiDao implements ImplementDetailTransaksi {
        try {
            String query = "INSERT INTO detail_transaksi (id, jml_barang, id_barang, id_transaksi) VALUES (?, ?, ?, ?)";
            
-           PreparedStatement ps = conn.prepareStatement(query);
+           PreparedStatement ps = Koneksi().prepareStatement(query);
            ps.setInt(1, Types.NULL);
            ps.setInt(2, detailTransaksi.getJmlBarang());
            ps.setString(3, detailTransaksi.getIdBarang());
