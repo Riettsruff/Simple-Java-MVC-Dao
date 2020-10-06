@@ -26,12 +26,12 @@ public class BarangController implements PenjualanDao{
     public BarangController() {
         conn = Koneksi();
     }
-    
+
     /**
-     *
-     * @return
+     * Ini Fungsi Array List yang digunakan untuk select semua atribut dari database
+     * @return listBarang Saat fungsi ini dipanggil maka akan return array list yang 
+     * berisi seluruh atribut barang dari database
      */
-    @Override
     public List<Barang> getAllBarang() {
         List<Barang> listBarang = new ArrayList<>();
         

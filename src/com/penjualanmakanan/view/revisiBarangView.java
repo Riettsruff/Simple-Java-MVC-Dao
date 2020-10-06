@@ -50,6 +50,12 @@ public class revisiBarangView extends javax.swing.JFrame {
     FormatRupiah formatRupiah = new FormatRupiah();
     ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
 
+    /**
+     * Ini fungsi untuk menampilkan barang di tabel. listBarang adalah arraylist yang dibuat
+     * untuk getAllBarang. Terdapat 2 dimensi array obj yang terdiri dari listBarang.size(jumlah barang yang ada)
+     * dan [5] karena ada 5 kolom
+     */
+    
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
 
@@ -82,6 +88,14 @@ public class revisiBarangView extends javax.swing.JFrame {
         );
     }
 
+    /**
+     * Ini fungsi untuk validasi Barang sebelum di input atau update. Saat masuk ke bagian else
+     * akan dilihat ini validasi untuk insert atau update. Jika untuk insert maka ada checking
+     * lagi apakah stok dan harga yang diinput tidak berupa angka. Jika untuk update maka ada 
+     * checking apakah stok yang diinput tidak berupa angka dan untuk harga sudah di substring dan replace
+     * @param pilihan Ini parameter pilihan  
+     */
+    
     public void validasiBarang(String pilihan) {
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
@@ -95,20 +109,19 @@ public class revisiBarangView extends javax.swing.JFrame {
         } else if (validasiupdatenamabarang.cekNamaBarang(inputNama.getText())) {
             JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                Integer.parseInt(inputStok.getText());
-                Integer.parseInt(inputHarga.getText());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            Barang barang = new Barang();
-            barang.setId(inputId.getText());
-            barang.setNama(inputNama.getText());
-            barang.setStok(Integer.parseInt(inputStok.getText()));
-            
             if (pilihan.equalsIgnoreCase("insertBarang")) {
+                try {
+                    Integer.parseInt(inputStok.getText());
+                    Integer.parseInt(inputHarga.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Stok barang / Harga barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                Barang barang = new Barang();
+                barang.setId(inputId.getText());
+                barang.setNama(inputNama.getText());
+                barang.setStok(Integer.parseInt(inputStok.getText()));
                 barang.setHarga(Integer.parseInt(inputHarga.getText()));
 
                 boolean insertBarang = barangController.insertBarang(barang);
@@ -120,6 +133,17 @@ public class revisiBarangView extends javax.swing.JFrame {
                 }
 
             } else if (pilihan.equalsIgnoreCase("updateBarang")) {
+                try {
+                    Integer.parseInt(inputStok.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Stok barang wajib berupa angka", "Oops!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                Barang barang = new Barang();
+                barang.setId(inputId.getText());
+                barang.setNama(inputNama.getText());
+                barang.setStok(Integer.parseInt(inputStok.getText()));
                 barang.setHarga(Integer.parseInt(inputHarga.getText().substring(2, inputHarga.getText().length() - 3).replace(".", "")));
 
                 boolean updateBarang = barangController.updateBarang(barang);
@@ -135,6 +159,10 @@ public class revisiBarangView extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * ini fungsi yang digunakan untuk secara automatis menyiapkan saat ada barang baru hendak diinsert
+     */
+    
     public void initData() {
         int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
         inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));

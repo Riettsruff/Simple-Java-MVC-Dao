@@ -32,6 +32,14 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
     /**
      * Creates new form revisiHistoryTransaksiView
      */
+    
+    /**
+     * Ini fungsi untuk menampilkan history transaksi di tabel. listTransaksi adalah arraylist yang dibuat
+     * untuk getAllTransaksi. Terdapat 2 dimensi array obj yang terdiri dari listBarang.size(jumlah transaksi yang ada)
+     * dan [5] karena ada 5 kolom
+     */
+    
+    
     public void bindingTabelTransaksi() {
         listTransaksi = new TransaksiController().getAllTransaksi();
         
