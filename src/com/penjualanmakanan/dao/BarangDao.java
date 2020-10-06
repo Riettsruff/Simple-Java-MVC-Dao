@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +25,7 @@ public class BarangDao implements ImplementBarang {
         conn = Koneksi();
     }
  
+    @Override
     public boolean insert(Barang barang) {
         try {
             String query = "INSERT INTO barang (id, nama, stok, harga) VALUES (?, ?, ?, ?)";
@@ -49,6 +48,7 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    @Override
     public boolean delete(String idBarang) {
         try {
             String query = "DELETE FROM barang WHERE id=?";
@@ -68,6 +68,7 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    @Override
     public boolean update(Barang barang) {
         try {
             String query = "UPDATE barang SET nama = ?, stok = ?, harga = ? WHERE id = ?";
@@ -90,6 +91,7 @@ public class BarangDao implements ImplementBarang {
         return false;
     }
 
+    @Override
     public List<Barang> getAll() {
         List<Barang> listBarang = new ArrayList<>();
         
@@ -118,6 +120,7 @@ public class BarangDao implements ImplementBarang {
         return listBarang;
     }
 
+    @Override
     public String getMaxId() {
         String maxIdBarang = "001";
         
@@ -141,6 +144,7 @@ public class BarangDao implements ImplementBarang {
         return maxIdBarang;
     }
 
+    @Override
     public int getStokById(String idBarang) {
         int stok = 0;
 
