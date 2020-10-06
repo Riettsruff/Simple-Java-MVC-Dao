@@ -11,7 +11,7 @@ import java.util.List;
 import com.penjualanmakanan.model.Barang;
 import com.penjualanmakanan.util.FormatRupiah;
 import com.penjualanmakanan.util.FormatTanggal;
-import com.penjualanmakanan.util.ValidasiUpdateNamaBarang;
+import com.penjualanmakanan.util.ValidasiBarang;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +48,6 @@ public class revisiBarangView extends javax.swing.JFrame {
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
-    ValidasiUpdateNamaBarang validasiupdatenamabarang = new ValidasiUpdateNamaBarang();
 
     /**
      * Ini fungsi untuk menampilkan barang di tabel. listBarang adalah arraylist yang dibuat
@@ -96,6 +95,49 @@ public class revisiBarangView extends javax.swing.JFrame {
      * @param pilihan Ini parameter pilihan  
      */
     
+    public void submitBarang(String actionType) {
+        Object[][] targetValidasi = new Object[3][3];
+        
+        targetValidasi[0][0] = "nama";
+        targetValidasi[0][1] = "Nama Barang";
+        targetValidasi[0][2] = inputNama.getText();
+        
+        targetValidasi[1][0] = "stok";
+        targetValidasi[1][1] = "Stok Barang";
+        targetValidasi[1][2] = inputStok.getText();
+        
+        targetValidasi[2][0] = "harga";
+        targetValidasi[2][1] = "Harga Barang";
+        targetValidasi[2][2] = inputHarga.getText();
+
+        ValidasiBarang validasiBarang = new ValidasiBarang(targetValidasi, actionType);
+        
+        if(validasiBarang.isValid()) {
+            Barang barang = new Barang();
+            
+            barang.setId(inputId.getText());
+            barang.setNama(inputNama.getText());
+            barang.setStok(Integer.parseInt(inputStok.getText()));
+            barang.setHarga(Integer.parseInt(inputHarga.getText()));
+            
+            boolean isSubmitSuccess = 
+                actionType == "insert" 
+                    ? barangController.insertBarang(barang) 
+                    : barangController.updateBarang(barang);
+            
+            if(isSubmitSuccess) {
+                JOptionPane.showMessageDialog(
+                    this, 
+                    (actionType == "insert" ? "Penambahan" : "Update") + " Barang berhasil.",
+                    "Sukses",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                
+                initData();
+            }
+        }
+    }
+    
     public void validasiBarang(String pilihan) {
         if (inputNama.getText().equals("") && inputStok.getText().equals("")
                 && inputHarga.getText().equals("")) {
@@ -106,8 +148,6 @@ public class revisiBarangView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Stok barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
         } else if (inputHarga.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Harga barang wajib diisi", "Oops!", JOptionPane.ERROR_MESSAGE);
-        } else if (validasiupdatenamabarang.cekNamaBarang(inputNama.getText())) {
-            JOptionPane.showMessageDialog(this, "Nama barang sudah ada", "Oops!", JOptionPane.ERROR_MESSAGE);
         } else {
             if (pilihan.equalsIgnoreCase("insertBarang")) {
                 try {
@@ -396,7 +436,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_RefreshActionPerformed
 
     private void Button_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_UpdateActionPerformed
-        validasiBarang("updateBarang");
+        submitBarang("update");
     }//GEN-LAST:event_Button_UpdateActionPerformed
 
     private void Button_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_DeleteActionPerformed
@@ -412,7 +452,7 @@ public class revisiBarangView extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_DeleteActionPerformed
 
     private void Button_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AddActionPerformed
-        validasiBarang("insertBarang");
+        submitBarang("insert");
     }//GEN-LAST:event_Button_AddActionPerformed
 
     private void Button_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_BackActionPerformed
@@ -423,10 +463,16 @@ public class revisiBarangView extends javax.swing.JFrame {
 
     private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
         int baris = tabelBarang.getSelectedRow();
+        
         Object id = tabelBarang.getValueAt(baris, 1);
         Object nama = tabelBarang.getValueAt(baris, 2);
         Object stok = tabelBarang.getValueAt(baris, 3);
-        Object harga = tabelBarang.getValueAt(baris, 4);
+        Object harga = Integer.parseInt(
+            tabelBarang.getValueAt(baris, 4).toString()
+                .substring(2, tabelBarang.getValueAt(baris, 4).toString().length() - 3)
+                .replace(".", "")
+        );
+        
         inputId.setText(id.toString());
         inputNama.setText(nama.toString());
         inputStok.setText(stok.toString());
