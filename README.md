@@ -1,1 +1,2 @@
-# Tugas_Kapita
+# Simple Java MVC Dao
+Hope you enjoy :]
