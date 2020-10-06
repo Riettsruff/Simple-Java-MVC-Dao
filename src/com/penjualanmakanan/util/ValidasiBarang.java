@@ -15,6 +15,7 @@ import java.util.List;
  * @author Riett
  */
 public class ValidasiBarang extends ValidasiForm {
+    
     private final List<Barang> listBarang = new BarangController().getAllBarang();
     
     private Object[][] target;

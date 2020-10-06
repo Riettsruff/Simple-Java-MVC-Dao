@@ -41,7 +41,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
 
     
     /**
-    * Method yang digunakan untuk menginisialisasi nilai form
+    * Berfungsi untuk menginisialisasi nilai-nilai dari suatu form
     */
     public void initFormValue() {
         if (Pilihan_Barang.getItemCount() == 0) {
@@ -66,7 +66,7 @@ public class revisiTransaksiView extends javax.swing.JFrame {
     }
 
     /**
-    * Method yang digunakan untuk menampilkan barang
+    * Berfungsi untuk membuat struktur tabel serta menerapkan isinya
     * @param customBarang untuk mendapatkan data daftar barang yang akan ditampilkan
     */
     public void tampilBarang(List<Barang> customBarang) {
@@ -110,9 +110,9 @@ public class revisiTransaksiView extends javax.swing.JFrame {
         );
     }
     /**
-    * Method yang digunakan untuk validasi barang
-    * @param actionType yang berisi jenis aksi yang akan dilakukan
-    */
+     * Fungsi yang dieksekusi saat terjadinya event click pada tombol 'Add' / 'Checkout'
+     * @param actionType 
+     */
     public void submitTransaksi(String actionType) {
         Object[][] targetValidasi = new Object[2][3];
         

@@ -21,12 +21,16 @@ public class revisiBarangView extends javax.swing.JFrame {
     List<Barang> listBarang = new ArrayList<>();
     BarangController barangController = new BarangController();
     FormatRupiah formatRupiah = new FormatRupiah();
-    
+    /**
+     * Inisialisasi komponen dan data
+     */
     public revisiBarangView() {
         initComponents();
         initData();
     }
-    
+    /**
+     * Inisialisasi nilai form
+     */
     public void initFormValue() {
         int maxIdBarang = Integer.parseInt(barangController.getMaxIdBarang());
         inputId.setText("BRG" + String.format("%03d", ++maxIdBarang));
@@ -37,12 +41,16 @@ public class revisiBarangView extends javax.swing.JFrame {
 
         inputHarga.setText("");
     }
-    
+    /**
+     * Inisialisasi data
+     */
     public void initData() {
         initFormValue();
         tampilBarang();
     }
-    
+    /**
+     * Menampilkan data barang
+     */
     public void tampilBarang() {
         listBarang = new BarangController().getAllBarang();
 
@@ -79,9 +87,9 @@ public class revisiBarangView extends javax.swing.JFrame {
         );
     }
     /**
-    * Method yang digunakan untuk validasi barang
-    * @param actionType yang berisi jenis aksi yang akan dilakukan
-    */
+     * Fungsi yang dieksekusi saat terjadi event click pada tombol 'Add' / 'Update
+     * @param actionType 
+     */
     public void submitBarang(String actionType) {
         Object[][] targetValidasi = new Object[3][3];
         

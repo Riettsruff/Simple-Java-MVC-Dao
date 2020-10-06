@@ -12,7 +12,9 @@ package com.penjualanmakanan.view;
  */
 public class revisiBerandaView extends javax.swing.JFrame {
     
-    
+    /**
+     * Inisialisasi komponen
+     */
     public revisiBerandaView() {
         initComponents();
     }

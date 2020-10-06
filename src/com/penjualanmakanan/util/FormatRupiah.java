@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class FormatRupiah {
     /**
-    * Ini fungsi yang memformat uang menjadi kurensi rupiah.
+    * Untuk memformat uang dalam long menjadi kurensi rupiah.
     * @param uang adalah value yang akan diformat 
     * @return kurensiIndonesia.format(uang) yang merupakan fungsi dari library NumberFormat
     */

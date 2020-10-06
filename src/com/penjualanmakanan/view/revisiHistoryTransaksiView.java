@@ -36,10 +36,6 @@ public class revisiHistoryTransaksiView extends javax.swing.JFrame {
      * untuk getAllTransaksi. Terdapat 2 dimensi array obj yang terdiri dari listBarang.size(jumlah transaksi yang ada)
      * dan [5] karena ada 5 kolom
      */
-    
-    /**
-    * Method yang digunakan untuk mengikat (binding) tabel transaksi
-    */
     public void bindingTabelTransaksi() {
         listTransaksi = new TransaksiController().getAllTransaksi();
         

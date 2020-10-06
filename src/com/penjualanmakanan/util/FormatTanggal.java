@@ -15,13 +15,17 @@ import java.util.Date;
 public class FormatTanggal {
     private Date tanggal;
     private String format;
-    
+    /**
+     * Untuk mengisi tanggal yang akan diformat dan mengisi format yang akan digunakan
+     * @param tanggal
+     * @param format 
+     */
     public FormatTanggal(Date tanggal, String format) {
         this.tanggal = tanggal;
         this.format = format;
     }
     /**
-    * Ini fungsi yang menyusun tanggal sesuai format tertentu.
+    * Untuk yang menyusun tanggal sesuai format tertentu.
     * @return simpleDateFormat.format(tanggal) yang merupakan fungsi dari library simpleDateFormat
     */
     @Override

@@ -31,8 +31,9 @@ public class ValidasiForm {
         return dialogTitle;
     }
     /**
-     * Untuk memasukkan value ke dalam dialogMessage 
-    */
+     * Untuk memasukkan value ke dalam dialogMessage
+     * @param dialogMessage 
+     */
     protected void setDialogMessage(String dialogMessage) {
         this.dialogMessage = dialogMessage;
     }
@@ -43,15 +44,26 @@ public class ValidasiForm {
     protected String getDialogMessage() {
         return dialogMessage;
     }
-    
+    /**
+     * Berfungsi sebagai setter dari variabel isValid
+     * @param isValid 
+     */
     protected void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
-    
+    /**
+     * Berfungsi sebagai getter dari variabel isValid
+     * @return isValid
+     */
     protected boolean getIsValid() {
         return isValid;
     }
-    
+    /**
+     * Mengecek validitas dari value yang harus diisi
+     * @param label
+     * @param value
+     * @return 
+     */
     protected boolean isRequiredValid(String label, String value) {
         setIsValid(!value.equals(""));
         
@@ -60,7 +72,12 @@ public class ValidasiForm {
         
         return isValid;
     }
-    
+    /**
+     * Mengecek validitas dari angka
+     * @param label
+     * @param value
+     * @return 
+     */
     protected boolean isNumberValid(String label, String value) {
         Pattern pattern = Pattern.compile("[0-9]+");
         
@@ -71,7 +88,12 @@ public class ValidasiForm {
         
         return isValid;
     }
-    
+    /**
+     * Mengecek apakah angka tersebut lebih dari nol
+     * @param label
+     * @param value
+     * @return 
+     */
     protected boolean isNumberMoreThanZero(String label, String value) {
         setIsValid(Integer.parseInt(value) > 0);
         
@@ -80,7 +102,9 @@ public class ValidasiForm {
         
         return isValid;
     }
-    
+    /**
+     * Berfungsi untuk menampilkan isi pesan dialog
+     */
     protected void showMessageDialog() {
         JOptionPane.showMessageDialog(
             null,
