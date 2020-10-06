@@ -49,8 +49,7 @@ public class BarangDao implements ImplementBarang {
     }
 
     /**
-     * Ini adalah function untuk delete barang. Terdapat query untuk delete barang yang id barang nya didapat
-     * dari method pada class model barang
+     * Ini adalah function untuk delete barang. Terdapat query untuk delete barang
      * @param idBarang Ini parameter idBarang yang akan dihapus
      * @return boolean
      */

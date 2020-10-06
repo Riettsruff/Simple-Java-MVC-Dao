@@ -39,8 +39,8 @@ public class BarangController {
     
     /**
      * Function untuk memperoleh stok berdasarkan id barang
-     * @param idBarang
-     * @return implementBarang.getStokById(idBarang) yang merupakan methd pada class dao barang
+     * @param idBarang ini merupakan parameter idBarang yang akan dilihat stoknya
+     * @return implementBarang.getStokById(idBarang) yang merupakan method pada class dao barang
      */
     
     public int getStokByIdBarang(String idBarang) {

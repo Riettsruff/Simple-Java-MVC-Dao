@@ -20,6 +20,13 @@ import java.util.List;
  * @author Riett
  */
 public class DetailTransaksiDao implements ImplementDetailTransaksi {
+    
+    /**
+     * Ini adalah function untuk getAll detail transaksi
+     * Saat hasil query sudah masuk ke ResultSet maka akan di masukkan ke model
+     * DetailTransaksi yang kemudian ditambahkan ke array list
+     * @return array list yang sudah berisi detailtransaksi
+     */
     @Override
     public List<DetailTransaksi> getAll() {
        List<DetailTransaksi> listDetailTransaksi = new ArrayList<>();
@@ -49,6 +56,13 @@ public class DetailTransaksiDao implements ImplementDetailTransaksi {
        return listDetailTransaksi;
    }
    
+    
+    /**
+     * Ini function untuk insert detail transaksi
+     * Value didapat dari get pada class model detailtransaksi
+     * @param detailTransaksi Ini objek detailTransaksi
+     * @return boolean
+     */
    @Override
    public boolean insert(DetailTransaksi detailTransaksi) {
        try {

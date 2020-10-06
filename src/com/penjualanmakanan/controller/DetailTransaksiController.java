@@ -20,10 +20,20 @@ public class DetailTransaksiController {
         implementDetailTransaksi = new DetailTransaksiDao();
     }
     
+    /**
+     * Ini merupakan method untuk return method getAll pada class dao
+     * @return method pada class dao DetailTransaksi
+     */
     public List<DetailTransaksi> getAllDetailTransaksi() {
        return implementDetailTransaksi.getAll();
    }
    
+    /**
+     * Ini merupakan method untuk return method insert pada class dao
+     * @param detailTransaksi ini merupakan objek detailTransaksi
+     * @return method pada class dao DetailTransaksi
+     */
+    
    public boolean insertDetailTransaksi(DetailTransaksi detailTransaksi) {
        return implementDetailTransaksi.insert(detailTransaksi);
    }
