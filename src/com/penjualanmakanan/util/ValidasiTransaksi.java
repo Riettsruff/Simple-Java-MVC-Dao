@@ -96,7 +96,7 @@ public class ValidasiTransaksi extends ValidasiForm {
         }
         
         if(jumlahBarangBeli > stokBarangTersedia) {
-            setDialogTitle("Error");
+            setDialogTitle("Oops");
             setDialogMessage("Stok " + barangValue.getNama() + " tersisa " + stokBarangTersedia);
             setIsValid(false);
             
@@ -158,7 +158,7 @@ public class ValidasiTransaksi extends ValidasiForm {
                 return isAddItemKeranjangBelanjaSuccess();
             case "CHECKOUT_TRANSAKSI":
                 if(isKeranjangBelanjaEmpty()) {
-                    setDialogTitle("Error");
+                    setDialogTitle("Oops");
                     setDialogMessage("Daftar Barang Belanjaan masih kosong");
                     setIsValid(false);
 
